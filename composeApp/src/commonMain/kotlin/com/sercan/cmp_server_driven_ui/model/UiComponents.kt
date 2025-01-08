@@ -36,7 +36,15 @@ enum class ComponentType {
     @SerialName("BUTTON")
     BUTTON,
     @SerialName("TEXT_FIELD")
-    TEXT_FIELD
+    TEXT_FIELD,
+    @SerialName("CHECKBOX")
+    CHECKBOX,
+    @SerialName("RADIO_BUTTON")
+    RADIO_BUTTON,
+    @SerialName("DROPDOWN")
+    DROPDOWN,
+    @SerialName("SWITCH")
+    SWITCH
 }
 
 @Serializable
@@ -71,4 +79,54 @@ data class TextFieldComponent(
     override val style: ComponentStyle? = null,
     val hint: String,
     val label: String? = null
+) : UiComponent()
+
+@Serializable
+@SerialName("CHECKBOX")
+data class CheckboxComponent(
+    override val id: String,
+    @SerialName("componentType")
+    override val type: ComponentType = ComponentType.CHECKBOX,
+    override val position: Position,
+    override val style: ComponentStyle? = null,
+    val label: String,
+    val isChecked: Boolean = false
+) : UiComponent()
+
+@Serializable
+@SerialName("RADIO_BUTTON")
+data class RadioButtonComponent(
+    override val id: String,
+    @SerialName("componentType")
+    override val type: ComponentType = ComponentType.RADIO_BUTTON,
+    override val position: Position,
+    override val style: ComponentStyle? = null,
+    val label: String,
+    val group: String,
+    val isSelected: Boolean = false
+) : UiComponent()
+
+@Serializable
+@SerialName("DROPDOWN")
+data class DropdownComponent(
+    override val id: String,
+    @SerialName("componentType")
+    override val type: ComponentType = ComponentType.DROPDOWN,
+    override val position: Position,
+    override val style: ComponentStyle? = null,
+    val label: String,
+    val options: List<String>,
+    val selectedOption: String? = null
+) : UiComponent()
+
+@Serializable
+@SerialName("SWITCH")
+data class SwitchComponent(
+    override val id: String,
+    @SerialName("componentType")
+    override val type: ComponentType = ComponentType.SWITCH,
+    override val position: Position,
+    override val style: ComponentStyle? = null,
+    val label: String,
+    val isChecked: Boolean = false
 ) : UiComponent()

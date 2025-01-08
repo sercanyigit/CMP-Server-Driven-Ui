@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.compottie.lottie)
             api(libs.datastore.preferences)
             api(libs.datastore)
+            implementation(compose.materialIconsExtended)
         }
 
         desktopMain.dependencies {

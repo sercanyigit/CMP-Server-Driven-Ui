@@ -1,50 +1,40 @@
 [
     {
-        "type": "TEXT",
-        "id": "text_1",
-        "position": {
-            "x": 50,
-            "y": 50,
-            "width": 200
-        },
-        "style": {
-            "textColor": "#000000",
-            "fontSize": 16
-        },
-        "text": "Merhaba Compose"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_1",
-        "position": {
-            "x": 50,
-            "y": 120,
-            "width": 150,
-            "height": 48
-        },
-        "style": {
-            "backgroundColor": "#2196F3",
-            "textColor": "#FFFFFF"
-        },
-        "text": "Tıkla"
-    },
-    {
         "type": "TEXT_FIELD",
         "id": "text_field_2",
         "position": {
-            "x": 46,
-            "y": 197
+            "x": 10,
+            "y": 10
+        },
+        "hint": "İpucu metni",
+        "label": "Etiketdfdd"
+    },
+    {
+        "type": "CHECKBOX",
+        "id": "checkbox_3",
+        "position": {
+            "x": 12,
+            "y": 111
+        },
+        "label": "Onay Kutusu"
+    },
+    {
+        "type": "TEXT_FIELD",
+        "id": "text_field_4",
+        "position": {
+            "x": 18,
+            "y": 148
         },
         "hint": "İpucu metni",
         "label": "Etiket"
     },
     {
-        "type": "BUTTON",
-        "id": "button_3",
+        "type": "CHECKBOX",
+        "id": "checkbox_5",
         "position": {
-            "x": 48,
-            "y": 281
+            "x": 16,
+            "y": 179
         },
-        "text": "Buton"
+        "label": "Onay Kutusu"
     }
 ]

@@ -18,7 +18,7 @@ fun PropertiesPanel(
         modifier = Modifier
             .width(300.dp)
             .fillMaxHeight()
-            .background(Color.LightGray)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp)
     ) {
         if (selectedComponent == null) {
@@ -40,69 +40,48 @@ fun PropertiesPanel(
         
         Spacer(Modifier.height(8.dp))
 
-        // Pozisyon
-        Text("Pozisyon", style = MaterialTheme.typography.titleSmall)
+        // Pozisyon özellikleri
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            var position = selectedComponent.position
-            
             TextField(
-                value = position.x.toString(),
-                onValueChange = { 
-                    position = position.copy(x = it.toIntOrNull() ?: position.x)
-                    updateComponent(selectedComponent, position, onComponentUpdated)
+                value = selectedComponent.position.x.toString(),
+                onValueChange = { str ->
+                    str.toIntOrNull()?.let { x ->
+                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                            it.copy(x = x) 
+                        })
+                    }
                 },
                 label = { Text("X") },
                 modifier = Modifier.weight(1f)
             )
-            
             TextField(
-                value = position.y.toString(),
-                onValueChange = { 
-                    position = position.copy(y = it.toIntOrNull() ?: position.y)
-                    updateComponent(selectedComponent, position, onComponentUpdated)
+                value = selectedComponent.position.y.toString(),
+                onValueChange = { str ->
+                    str.toIntOrNull()?.let { y ->
+                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                            it.copy(y = y) 
+                        })
+                    }
                 },
                 label = { Text("Y") },
                 modifier = Modifier.weight(1f)
             )
         }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            var position = selectedComponent.position
-            
-            TextField(
-                value = position.width.toString(),
-                onValueChange = { 
-                    position = position.copy(width = it.toIntOrNull() ?: position.width)
-                    updateComponent(selectedComponent, position, onComponentUpdated)
-                },
-                label = { Text("Genişlik") },
-                modifier = Modifier.weight(1f)
-            )
-            
-            TextField(
-                value = position.height.toString(),
-                onValueChange = { 
-                    position = position.copy(height = it.toIntOrNull() ?: position.height)
-                    updateComponent(selectedComponent, position, onComponentUpdated)
-                },
-                label = { Text("Yükseklik") },
-                modifier = Modifier.weight(1f)
-            )
-        }
+        Spacer(Modifier.height(8.dp))
 
-        Spacer(Modifier.height(16.dp))
-
-        // Komponent spesifik özellikler
+        // Bileşene özel özellikler
         when (selectedComponent) {
             is TextComponent -> TextComponentProperties(selectedComponent, onComponentUpdated)
             is ButtonComponent -> ButtonComponentProperties(selectedComponent, onComponentUpdated)
             is TextFieldComponent -> TextFieldComponentProperties(selectedComponent, onComponentUpdated)
+            is CheckboxComponent -> CheckboxComponentProperties(selectedComponent, onComponentUpdated)
+            is RadioButtonComponent -> RadioButtonComponentProperties(selectedComponent, onComponentUpdated)
+            is DropdownComponent -> DropdownComponentProperties(selectedComponent, onComponentUpdated)
+            is SwitchComponent -> SwitchComponentProperties(selectedComponent, onComponentUpdated)
         }
     }
 }
@@ -165,15 +144,92 @@ private fun TextFieldComponentProperties(
     }
 }
 
-private fun updateComponent(
-    component: UiComponent,
-    newPosition: Position,
+@Composable
+private fun CheckboxComponentProperties(
+    component: CheckboxComponent,
     onComponentUpdated: (UiComponent) -> Unit
 ) {
-    val updated = when (component) {
-        is TextComponent -> component.copy(position = newPosition)
-        is ButtonComponent -> component.copy(position = newPosition)
-        is TextFieldComponent -> component.copy(position = newPosition)
+    Column {
+        TextField(
+            value = component.label,
+            onValueChange = { onComponentUpdated(component.copy(label = it)) },
+            label = { Text("Etiket") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Checkbox(
+            checked = component.isChecked,
+            onCheckedChange = { onComponentUpdated(component.copy(isChecked = it)) }
+        )
     }
-    onComponentUpdated(updated)
+}
+
+@Composable
+private fun RadioButtonComponentProperties(
+    component: RadioButtonComponent,
+    onComponentUpdated: (UiComponent) -> Unit
+) {
+    Column {
+        TextField(
+            value = component.label,
+            onValueChange = { onComponentUpdated(component.copy(label = it)) },
+            label = { Text("Etiket") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = component.group,
+            onValueChange = { onComponentUpdated(component.copy(group = it)) },
+            label = { Text("Grup") },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun DropdownComponentProperties(
+    component: DropdownComponent,
+    onComponentUpdated: (UiComponent) -> Unit
+) {
+    Column {
+        TextField(
+            value = component.label,
+            onValueChange = { onComponentUpdated(component.copy(label = it)) },
+            label = { Text("Etiket") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        // Seçenekleri düzenleme alanı eklenebilir
+    }
+}
+
+@Composable
+private fun SwitchComponentProperties(
+    component: SwitchComponent,
+    onComponentUpdated: (UiComponent) -> Unit
+) {
+    Column {
+        TextField(
+            value = component.label,
+            onValueChange = { onComponentUpdated(component.copy(label = it)) },
+            label = { Text("Etiket") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Switch(
+            checked = component.isChecked,
+            onCheckedChange = { onComponentUpdated(component.copy(isChecked = it)) }
+        )
+    }
+}
+
+private fun updateComponentPosition(
+    component: UiComponent,
+    update: (Position) -> Position
+): UiComponent {
+    return when (component) {
+        is TextComponent -> component.copy(position = update(component.position))
+        is ButtonComponent -> component.copy(position = update(component.position))
+        is TextFieldComponent -> component.copy(position = update(component.position))
+        is CheckboxComponent -> component.copy(position = update(component.position))
+        is RadioButtonComponent -> component.copy(position = update(component.position))
+        is DropdownComponent -> component.copy(position = update(component.position))
+        is SwitchComponent -> component.copy(position = update(component.position))
+    }
 } 
