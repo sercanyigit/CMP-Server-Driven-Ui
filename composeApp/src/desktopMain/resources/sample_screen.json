@@ -1,0 +1,52 @@
+[
+  {
+    "type": "TEXT",
+    "id": "text_1",
+    "position": {
+      "x": 50,
+      "y": 50,
+      "width": 200,
+      "height": 40
+    },
+    "style": {
+      "textColor": "#000000",
+      "fontSize": 16,
+      "padding": 8
+    },
+    "text": "Merhaba Dünya"
+  },
+  {
+    "type": "BUTTON",
+    "id": "button_1",
+    "position": {
+      "x": 50,
+      "y": 120,
+      "width": 150,
+      "height": 48
+    },
+    "style": {
+      "backgroundColor": "#2196F3",
+      "textColor": "#FFFFFF",
+      "cornerRadius": 8,
+      "padding": 16
+    },
+    "text": "Tıkla"
+  },
+  {
+    "type": "TEXT_FIELD",
+    "id": "textfield_1",
+    "position": {
+      "x": 50,
+      "y": 200,
+      "width": 250,
+      "height": 56
+    },
+    "style": {
+      "backgroundColor": "#FFFFFF",
+      "textColor": "#000000",
+      "padding": 8
+    },
+    "hint": "Adınızı girin",
+    "label": "Ad"
+  }
+] 

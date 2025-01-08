@@ -1,39 +1,81 @@
 package com.sercan.cmp_server_driven_ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import cmp_server_driven_ui.composeapp.generated.resources.Res
-import cmp_server_driven_ui.composeapp.generated.resources.compose_multiplatform
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import com.sercan.cmp_server_driven_ui.model.UiComponent
+import com.sercan.cmp_server_driven_ui.renderer.ScreenRenderer
+import com.sercan.cmp_server_driven_ui.service.LocalScreenService
+import com.sercan.cmp_server_driven_ui.service.ScreenService
+import kotlinx.coroutines.launch
+
+expect fun getPlatformName(): String
 
 @Composable
-@Preview
+expect fun EditorScreen()
+
+@Composable
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+        Box(modifier = Modifier.fillMaxSize()) {
+            when (getPlatformName()) {
+                "Android", "iOS" -> MobileApp()
+                else -> EditorScreen()
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        }
+    }
+}
+
+@Composable
+fun MobileApp() {
+    val scope = rememberCoroutineScope()
+    val screenService = LocalScreenService.current
+    var components by remember { mutableStateOf(emptyList<UiComponent>()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var error by remember { mutableStateOf<String?>(null) }
+    
+    LaunchedEffect(Unit) {
+        scope.launch {
+            try {
+                println("Ekran yükleme başladı")
+                isLoading = true
+                val loadedComponents = screenService.loadScreen("current_screen")
+                println("Yüklenen bileşenler: $loadedComponents")
+                components = loadedComponents
+            } catch (e: Exception) {
+                println("Ekran yüklenirken hata: ${e.message}")
+                e.printStackTrace()
+                error = "Hata: ${e.message}"
+            } finally {
+                isLoading = false
+            }
+        }
+    }
+    
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        when {
+            isLoading -> {
+                CircularProgressIndicator()
+            }
+            error != null -> {
+                Text("Hata: $error", color = Color.Red)
+            }
+            components.isEmpty() -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Bileşen bulunamadı")
+                    Text("Lütfen assets klasörünü kontrol edin", 
+                        style = MaterialTheme.typography.bodySmall)
                 }
+            }
+            else -> {
+                ScreenRenderer(components = components)
             }
         }
     }

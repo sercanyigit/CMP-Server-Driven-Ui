@@ -77,6 +77,8 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(compose.preview)
+            implementation(compose.uiTooling)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.okhttp)
         }
@@ -101,6 +103,14 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
+    sourceSets["main"].apply {
+        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        res.srcDirs("src/androidMain/res")
+        resources.srcDirs("src/androidMain/resources")
+        assets.srcDirs("src/androidMain/assets")
+    }
+    
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
