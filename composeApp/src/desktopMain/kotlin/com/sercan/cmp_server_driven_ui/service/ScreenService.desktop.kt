@@ -53,4 +53,18 @@ actual class ScreenService {
         }
     }
 
-    actual suspend fun readCommonJson(): Str
+    actual suspend fun readCommonJson(): String {
+        return try {
+            val classLoader = ScreenService::class.java.classLoader
+                ?: throw Exception("ClassLoader bulunamadı")
+
+            classLoader.getResourceAsStream("sample_screen.json")?.bufferedReader()?.use {
+                it.readText()
+            } ?: throw Exception("sample_screen.json bulunamadı")
+        } catch (e: Exception) {
+            println("JSON dosyası okunamadı: ${e.message}")
+            e.printStackTrace()
+            "[]"
+        }
+    }
+}
