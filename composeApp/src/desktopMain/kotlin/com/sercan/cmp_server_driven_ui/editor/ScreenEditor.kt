@@ -23,7 +23,11 @@ fun ScreenEditor() {
     val scope = rememberCoroutineScope()
     
     LaunchedEffect(Unit) {
-        components = screenService.loadSampleScreen()
+        try {
+            components = screenService.loadScreen("current_screen")
+        } catch (e: Exception) {
+            println("Ekran yüklenirken hata: ${e.message}")
+        }
     }
     
     Column {
@@ -34,7 +38,15 @@ fun ScreenEditor() {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Button(onClick = { components = screenService.loadSampleScreen() }) {
+            Button(onClick = { 
+                scope.launch {
+                    try {
+                        components = screenService.loadScreen("current_screen")
+                    } catch (e: Exception) {
+                        println("Örnek ekran yüklenirken hata: ${e.message}")
+                    }
+                }
+            }) {
                 Text("Örnek Ekranı Yükle")
             }
             

@@ -35,36 +35,27 @@ actual class ScreenService {
     }
     
     actual suspend fun loadScreen(screenId: String): List<UiComponent> {
-        println("LoadScreen çağrıldı: $screenId")
-        
-        if (context == null) {
-            println("HATA: Context null!")
-            return emptyList()
-        }
-
         return try {
-            // Assets'ten direkt okumayı deneyelim
-            context?.assets?.open("sample_screen.json")?.let { inputStream ->
-                val jsonText = inputStream.bufferedReader().use { it.readText() }
-                println("Assets'ten okunan JSON: $jsonText")
-                
-                try {
-                    val components = json.decodeFromString<List<UiComponent>>(jsonText)
-                    println("Başarıyla parse edilen bileşenler: $components")
-                    components
-                } catch (e: Exception) {
-                    println("JSON parse hatası: ${e.message}")
-                    e.printStackTrace()
-                    emptyList()
-                }
-            } ?: run {
-                println("Assets dosyası açılamadı")
-                emptyList()
-            }
+            val jsonText = readCommonJson()
+            json.decodeFromString(jsonText)
         } catch (e: Exception) {
-            println("Genel hata: ${e.message}")
-            e.printStackTrace()
+            println("Ekran yüklenirken hata: ${e.message}")
             emptyList()
+        }
+    }
+
+    actual suspend fun readCommonJson(): String {
+        return try {
+            val classLoader = ScreenService::class.java.classLoader
+                ?: throw Exception("ClassLoader bulunamadı")
+            
+            classLoader.getResourceAsStream("sample_screen.json")?.bufferedReader()?.use { 
+                it.readText() 
+            } ?: throw Exception("sample_screen.json bulunamadı")
+        } catch (e: Exception) {
+            println("JSON dosyası okunamadı: ${e.message}")
+            e.printStackTrace()
+            "[]"
         }
     }
 } 

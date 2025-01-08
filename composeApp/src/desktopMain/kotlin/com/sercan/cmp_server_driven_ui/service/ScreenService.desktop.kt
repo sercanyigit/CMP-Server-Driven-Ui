@@ -30,20 +30,27 @@ actual class ScreenService {
     }
     
     actual suspend fun loadScreen(screenId: String): List<UiComponent> {
-        val file = File("screens/$screenId.json")
-        if (!file.exists()) return emptyList()
-        return json.decodeFromString(file.readText())
+        return try {
+            val jsonText = readCommonJson()
+            json.decodeFromString(jsonText)
+        } catch (e: Exception) {
+            println("Ekran yüklenirken hata: ${e.message}")
+            emptyList()
+        }
     }
     
-    fun loadSampleScreen(): List<UiComponent> {
+    actual suspend fun readCommonJson(): String {
         return try {
-            val inputStream = javaClass.getResourceAsStream("/sample_screen.json")
-            val jsonString = inputStream?.bufferedReader()?.use { it.readText() }
-            jsonString?.let { json.decodeFromString<List<UiComponent>>(it) } ?: emptyList()
+            val classLoader = ScreenService::class.java.classLoader
+                ?: throw Exception("ClassLoader bulunamadı")
+                
+            classLoader.getResourceAsStream("sample_screen.json")?.bufferedReader()?.use { 
+                it.readText() 
+            } ?: throw Exception("sample_screen.json bulunamadı")
         } catch (e: Exception) {
-            println("Örnek ekran yüklenirken hata: ${e.message}")
+            println("JSON dosyası okunamadı: ${e.message}")
             e.printStackTrace()
-            emptyList()
+            "[]"
         }
     }
 } 

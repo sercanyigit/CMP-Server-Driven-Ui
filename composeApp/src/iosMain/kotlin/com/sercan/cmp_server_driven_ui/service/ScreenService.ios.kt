@@ -51,29 +51,27 @@ actual class ScreenService {
     @OptIn(ExperimentalForeignApi::class)
     actual suspend fun loadScreen(screenId: String): List<UiComponent> {
         return try {
-            val documentsPath = NSSearchPathForDirectoriesInDomains(
-                NSDocumentDirectory,
-                NSUserDomainMask,
-                true
-            ).firstOrNull() as? String ?: return emptyList()
-            
-            val filePath = "$documentsPath/$screenId.json"
-            val fileManager = NSFileManager.defaultManager
-            
-            if (!fileManager.fileExistsAtPath(filePath)) {
-                return emptyList()
-            }
-            
-            val jsonString = NSString.stringWithContentsOfFile(
-                filePath,
-                encoding = NSUTF8StringEncoding,
-                error = null
-            ) ?: return emptyList()
-            
-            json.decodeFromString(jsonString as String)
+            val jsonText = readCommonJson()
+            json.decodeFromString(jsonText)
         } catch (e: Exception) {
             println("Ekran yüklenirken hata: ${e.message}")
             emptyList()
+        }
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    actual suspend fun readCommonJson(): String {
+        return try {
+            val bundle = NSBundle.mainBundle
+            val path = bundle.pathForResource("sample_screen", ofType = "json")
+                ?: throw Exception("sample_screen.json bulunamadı")
+            
+            NSString.stringWithContentsOfFile(path, encoding = NSUTF8StringEncoding, error = null)
+                ?.toString() ?: throw Exception("Dosya okunamadı")
+        } catch (e: Exception) {
+            println("JSON dosyası okunamadı: ${e.message}")
+            e.printStackTrace()
+            "[]"
         }
     }
 } 

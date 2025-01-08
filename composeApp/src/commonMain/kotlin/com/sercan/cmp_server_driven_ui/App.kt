@@ -2,7 +2,10 @@ package com.sercan.cmp_server_driven_ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.UiComponent
 import com.sercan.cmp_server_driven_ui.renderer.ScreenRenderer
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
@@ -47,12 +51,12 @@ fun MobileApp() {
                 println("Ekran yükleme başladı")
                 isLoading = true
                 val loadedComponents = screenService.loadScreen("current_screen")
-                println("Yüklenen bileşenler: $loadedComponents")
+                println("Yüklenen bileşenler: ${loadedComponents.size}")
                 components = loadedComponents
             } catch (e: Exception) {
                 println("Ekran yüklenirken hata: ${e.message}")
                 e.printStackTrace()
-                error = "Hata: ${e.message}"
+                error = e.message
             } finally {
                 isLoading = false
             }
@@ -62,15 +66,36 @@ fun MobileApp() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when {
             isLoading -> {
-                CircularProgressIndicator()
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    CircularProgressIndicator()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Ekran yükleniyor...")
+                }
             }
             error != null -> {
-                Text("Hata: $error", color = Color.Red)
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Hata: $error", color = Color.Red)
+                    Button(onClick = {
+                        error = null
+                        isLoading = true
+                        scope.launch {
+                            try {
+                                components = screenService.loadScreen("current_screen")
+                            } catch (e: Exception) {
+                                error = e.message
+                            } finally {
+                                isLoading = false
+                            }
+                        }
+                    }) {
+                        Text("Tekrar Dene")
+                    }
+                }
             }
             components.isEmpty() -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Bileşen bulunamadı")
-                    Text("Lütfen assets klasörünü kontrol edin", 
+                    Text("Lütfen sample_screen.json dosyasını kontrol edin", 
                         style = MaterialTheme.typography.bodySmall)
                 }
             }

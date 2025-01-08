@@ -9,10 +9,9 @@
         },
         "style": {
             "textColor": "#000000",
-            "fontSize": 16,
-            "padding": 8
+            "fontSize": 16
         },
-        "text": "Merhaba Dünya"
+        "text": "Merhaba Compose"
     },
     {
         "type": "BUTTON",
@@ -25,27 +24,17 @@
         },
         "style": {
             "backgroundColor": "#2196F3",
-            "textColor": "#FFFFFF",
-            "padding": 16,
-            "cornerRadius": 8
+            "textColor": "#FFFFFF"
         },
         "text": "Tıkla"
     },
     {
-        "type": "TEXT_FIELD",
-        "id": "textfield_1",
+        "type": "TEXT",
+        "id": "text_2",
         "position": {
-            "x": 50,
-            "y": 200,
-            "width": 250,
-            "height": 56
+            "x": 55,
+            "y": 206
         },
-        "style": {
-            "backgroundColor": "#FFFFFF",
-            "textColor": "#000000",
-            "padding": 8
-        },
-        "hint": "Adınızı girin",
-        "label": "Ad"
+        "text": "Metin"
     }
 ]
