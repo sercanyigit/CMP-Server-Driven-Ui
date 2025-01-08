@@ -10,7 +10,7 @@ import kotlinx.serialization.modules.subclass
 import java.io.File
 
 actual class ScreenService {
-    private val json = Json { 
+    private val json = Json {
         prettyPrint = true
         ignoreUnknownKeys = true
         isLenient = true
@@ -22,13 +22,27 @@ actual class ScreenService {
             }
         }
     }
-    
+
     actual suspend fun saveScreen(screenId: String, components: List<UiComponent>) {
-        val file = File("screens/$screenId.json")
-        file.parentFile.mkdirs()
-        file.writeText(json.encodeToString(components))
+        try {
+            // Proje kök dizininde resources klasörü oluştur
+            val resourcesDir = File("src/commonMain/resources")
+            if (!resourcesDir.exists()) {
+                resourcesDir.mkdirs()
+            }
+
+            // sample_screen.json dosyasını güncelle
+            val file = File(resourcesDir, "sample_screen.json")
+            val jsonString = json.encodeToString(components)
+            file.writeText(jsonString)
+
+            println("Ekran başarıyla kaydedildi: ${file.absolutePath}")
+        } catch (e: Exception) {
+            println("Ekran kaydedilirken hata oluştu: ${e.message}")
+            e.printStackTrace()
+        }
     }
-    
+
     actual suspend fun loadScreen(screenId: String): List<UiComponent> {
         return try {
             val jsonText = readCommonJson()
@@ -38,19 +52,5 @@ actual class ScreenService {
             emptyList()
         }
     }
-    
-    actual suspend fun readCommonJson(): String {
-        return try {
-            val classLoader = ScreenService::class.java.classLoader
-                ?: throw Exception("ClassLoader bulunamadı")
-                
-            classLoader.getResourceAsStream("sample_screen.json")?.bufferedReader()?.use { 
-                it.readText() 
-            } ?: throw Exception("sample_screen.json bulunamadı")
-        } catch (e: Exception) {
-            println("JSON dosyası okunamadı: ${e.message}")
-            e.printStackTrace()
-            "[]"
-        }
-    }
-} 
+
+    actual suspend fun readCommonJson(): Str

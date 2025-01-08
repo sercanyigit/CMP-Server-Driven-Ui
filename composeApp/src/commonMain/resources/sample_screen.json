@@ -1,34 +1,50 @@
 [
-  {
-    "id": "text_1",
-    "componentType": "TEXT",
-    "type": "TEXT",
-    "position": {
-      "x": 50,
-      "y": 50,
-      "width": 200,
-      "height": 40
+    {
+        "type": "TEXT",
+        "id": "text_1",
+        "position": {
+            "x": 50,
+            "y": 50,
+            "width": 200
+        },
+        "style": {
+            "textColor": "#000000",
+            "fontSize": 16
+        },
+        "text": "Merhaba Compose"
     },
-    "style": {
-      "textColor": "#000000",
-      "fontSize": 16
+    {
+        "type": "BUTTON",
+        "id": "button_1",
+        "position": {
+            "x": 50,
+            "y": 120,
+            "width": 150,
+            "height": 48
+        },
+        "style": {
+            "backgroundColor": "#2196F3",
+            "textColor": "#FFFFFF"
+        },
+        "text": "Tıkla"
     },
-    "text": "Merhaba Compose"
-  },
-  {
-    "id": "button_1",
-    "componentType": "BUTTON",
-    "type": "BUTTON",
-    "position": {
-      "x": 50,
-      "y": 120,
-      "width": 150,
-      "height": 48
+    {
+        "type": "TEXT_FIELD",
+        "id": "text_field_2",
+        "position": {
+            "x": 46,
+            "y": 197
+        },
+        "hint": "İpucu metni",
+        "label": "Etiket"
     },
-    "style": {
-      "backgroundColor": "#2196F3",
-      "textColor": "#FFFFFF"
-    },
-    "text": "Tıkla"
-  }
-] 
+    {
+        "type": "BUTTON",
+        "id": "button_3",
+        "position": {
+            "x": 48,
+            "y": 281
+        },
+        "text": "Buton"
+    }
+]
