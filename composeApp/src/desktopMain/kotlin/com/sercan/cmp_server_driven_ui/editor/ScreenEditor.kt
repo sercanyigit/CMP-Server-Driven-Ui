@@ -264,6 +264,9 @@ private fun DraggableComponent(
             )
             .clickable { onSelected() }
     ) {
-        ComponentRenderer(component)
+        ComponentRenderer(
+            component,
+            onStateChanged = {}
+        )
     }
 }
