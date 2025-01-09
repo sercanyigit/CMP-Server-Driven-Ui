@@ -118,7 +118,7 @@ private fun ComponentItem(
                     ComponentType.TEXT_FIELD -> Icons.Default.Add
                     ComponentType.CHECKBOX -> Icons.Default.Add
                     ComponentType.RADIO_BUTTON -> Icons.Default.Add
-                    ComponentType.DROPDOWN -> Icons.Default.ArrowDropDown
+                    ComponentType.DROPDOWN -> Icons.Default.Add
                     ComponentType.SWITCH -> Icons.Default.Add
                 },
                 contentDescription = componentType.name,

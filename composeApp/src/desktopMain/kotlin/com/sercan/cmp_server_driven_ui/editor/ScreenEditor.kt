@@ -24,7 +24,9 @@ import com.sercan.cmp_server_driven_ui.editor.ComponentFactory.createComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenEditor() {
+fun ScreenEditor(
+    onSaveRequest: () -> Unit = {}
+) {
     val screenService = LocalScreenService.current
     val scope = rememberCoroutineScope()
 
@@ -101,7 +103,7 @@ fun ScreenEditor() {
                     scope.launch {
                         try {
                             screenService.saveScreen("current_screen", components)
-                            // Başarılı kayıt mesajı gösterilebilir
+                            onSaveRequest()
                         } catch (e: Exception) {
                             // Hata mesajı gösterilebilir
                         }

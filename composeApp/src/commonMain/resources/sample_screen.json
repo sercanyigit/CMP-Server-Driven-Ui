@@ -7,18 +7,7 @@
             "y": 0,
             "width": 328
         },
-        "text": "Metin"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_1",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160,
-            "height": 48
-        },
-        "text": "Buton"
+        "text": "asdasd"
     },
     {
         "type": "TEXT_FIELD",
@@ -40,7 +29,8 @@
             "y": 0,
             "width": 160
         },
-        "label": "Onay Kutusu"
+        "label": "Onay Kutusu",
+        "isChecked": true
     },
     {
         "type": "RADIO_BUTTON",
@@ -54,59 +44,37 @@
         "group": "grup1"
     },
     {
-        "type": "DROPDOWN",
-        "id": "dropdown_5",
+        "type": "TEXT",
+        "id": "text_0",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328
+        },
+        "text": "asdasd"
+    },
+    {
+        "type": "TEXT_FIELD",
+        "id": "text_field_1",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 180
+            "height": 56
         },
-        "label": "Açılır Liste",
-        "options": [
-            "Seçenek 1",
-            "Seçenek 2",
-            "Seçenek 3"
-        ]
+        "hint": "asdasda",
+        "label": "Etiket"
     },
     {
-        "type": "SWITCH",
-        "id": "switch_6",
+        "type": "TEXT_FIELD",
+        "id": "text_field_2",
         "position": {
             "x": 0,
             "y": 0,
-            "width": 160
+            "width": 328,
+            "height": 56
         },
-        "label": "Anahtar"
-    },
-    {
-        "type": "SWITCH",
-        "id": "switch_7",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160
-        },
-        "label": "Anahtar"
-    },
-    {
-        "type": "SWITCH",
-        "id": "switch_8",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160
-        },
-        "label": "Anahtar"
-    },
-    {
-        "type": "SWITCH",
-        "id": "switch_9",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 180
-        },
-        "label": "Anahtar"
+        "hint": "İpucu metni",
+        "label": "Etiket"
     }
 ]
