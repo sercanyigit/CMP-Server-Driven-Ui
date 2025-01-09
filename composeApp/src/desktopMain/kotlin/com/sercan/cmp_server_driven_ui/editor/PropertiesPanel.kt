@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AlignHorizontalCenter
+import androidx.compose.material.icons.filled.AlignHorizontalLeft
+import androidx.compose.material.icons.filled.AlignHorizontalRight
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +40,7 @@ import com.sercan.cmp_server_driven_ui.model.TextComponent
 import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.model.UiComponent
 import com.sercan.cmp_server_driven_ui.model.WidthSize
+import com.sercan.cmp_server_driven_ui.model.HorizontalAlignment
 
 @Composable
 fun PropertiesPanel(
@@ -111,6 +115,18 @@ fun PropertiesPanel(
             onSizeSelected = { newSize ->
                 onComponentUpdated(updateComponentPosition(selectedComponent) { 
                     it.copy(widthSize = newSize) 
+                })
+            }
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        // Hizalama seçici
+        AlignmentSelector(
+            currentAlignment = selectedComponent.position.alignment,
+            onAlignmentSelected = { newAlignment ->
+                onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                    it.copy(alignment = newAlignment) 
                 })
             }
         )
@@ -372,6 +388,57 @@ private fun WidthSizeSelector(
                             MaterialTheme.colorScheme.onPrimaryContainer
                         else
                             MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AlignmentSelector(
+    currentAlignment: HorizontalAlignment,
+    onAlignmentSelected: (HorizontalAlignment) -> Unit
+) {
+    Column {
+        Text(
+            "Hizalama", 
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            HorizontalAlignment.values().forEach { alignment ->
+                OutlinedButton(
+                    onClick = { onAlignmentSelected(alignment) },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = if (alignment == currentAlignment) 
+                            MaterialTheme.colorScheme.primaryContainer 
+                        else 
+                            MaterialTheme.colorScheme.surface
+                    ),
+                    border = BorderStroke(
+                        1.dp,
+                        if (alignment == currentAlignment)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.outline
+                    )
+                ) {
+                    Icon(
+                        imageVector = when (alignment) {
+                            HorizontalAlignment.START -> Icons.Default.AlignHorizontalLeft
+                            HorizontalAlignment.CENTER -> Icons.Default.AlignHorizontalCenter
+                            HorizontalAlignment.END -> Icons.Default.AlignHorizontalRight
+                        },
+                        contentDescription = when (alignment) {
+                            HorizontalAlignment.START -> "Sola Hizala"
+                            HorizontalAlignment.CENTER -> "Ortala"
+                            HorizontalAlignment.END -> "Sağa Hizala"
+                        }
                     )
                 }
             }

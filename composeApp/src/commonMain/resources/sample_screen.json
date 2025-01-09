@@ -1,38 +1,37 @@
 [
     {
         "type": "BUTTON",
-        "id": "button_1",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160,
-            "height": 48,
-            "widthSize": "FULL"
-        },
-        "text": "Gönder"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "text_field_2",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 56,
-            "widthSize": "FULL"
-        },
-        "hint": "İpucu metni",
-        "label": "Etiket"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_3",
+        "id": "button_0",
         "position": {
             "x": 0,
             "y": 0,
             "width": 160,
             "height": 48,
             "widthSize": "HALF"
+        },
+        "text": "Buton"
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_1",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 48,
+            "alignment": "CENTER"
+        },
+        "text": "Buton"
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_2",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 48,
+            "alignment": "END"
         },
         "text": "Buton"
     }

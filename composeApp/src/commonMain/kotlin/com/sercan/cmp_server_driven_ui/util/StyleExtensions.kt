@@ -3,12 +3,14 @@ package com.sercan.cmp_server_driven_ui.util
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.ComponentStyle
 import com.sercan.cmp_server_driven_ui.model.Position
 import com.sercan.cmp_server_driven_ui.model.WidthSize
+import com.sercan.cmp_server_driven_ui.model.HorizontalAlignment
 
 @Composable
 fun Position.toModifier(): Modifier {
@@ -26,6 +28,15 @@ fun Position.toModifier(): Modifier {
             }
         )
         .height(height.dp)
+}
+
+@Composable
+fun Position.getAlignment(): Alignment {
+    return when (alignment) {
+        HorizontalAlignment.START -> Alignment.CenterStart
+        HorizontalAlignment.CENTER -> Alignment.Center
+        HorizontalAlignment.END -> Alignment.CenterEnd
+    }
 }
 
 fun ComponentStyle.toModifier(): Modifier {

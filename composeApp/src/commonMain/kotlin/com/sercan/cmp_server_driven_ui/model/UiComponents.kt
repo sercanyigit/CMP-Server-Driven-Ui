@@ -13,12 +13,25 @@ sealed class UiComponent {
 }
 
 @Serializable
+enum class HorizontalAlignment {
+    @SerialName("START")
+    START,    // Sol
+    
+    @SerialName("CENTER")
+    CENTER,   // Orta
+    
+    @SerialName("END")
+    END       // Sağ
+}
+
+@Serializable
 data class Position(
     val x: Int,
     val y: Int,
     val width: Int = 100,
     val height: Int = 40,
-    val widthSize: WidthSize = WidthSize.FIXED
+    val widthSize: WidthSize = WidthSize.FIXED,
+    val alignment: HorizontalAlignment = HorizontalAlignment.START
 )
 
 @Serializable
