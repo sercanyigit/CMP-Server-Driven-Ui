@@ -46,20 +46,17 @@ fun MobileApp() {
     var error by remember { mutableStateOf<String?>(null) }
     
     LaunchedEffect(Unit) {
-        scope.launch {
-            try {
-                println("Ekran yükleme başladı")
-                isLoading = true
-                val loadedComponents = screenService.loadScreen("current_screen")
-                println("Yüklenen bileşenler: ${loadedComponents.size}")
-                components = loadedComponents
-            } catch (e: Exception) {
-                println("Ekran yüklenirken hata: ${e.message}")
-                e.printStackTrace()
-                error = e.message
-            } finally {
-                isLoading = false
-            }
+        try {
+            println("Ekran yükleme başladı")
+            val loadedComponents = screenService.loadScreen("current_screen")
+            println("Yüklenen bileşenler: ${loadedComponents.size}")
+            components = loadedComponents
+        } catch (e: Exception) {
+            println("Ekran yüklenirken hata: ${e.message}")
+            e.printStackTrace()
+            error = e.message
+        } finally {
+            isLoading = false
         }
     }
     
@@ -100,7 +97,22 @@ fun MobileApp() {
                 }
             }
             else -> {
-                ScreenRenderer(components = components)
+                ScreenRenderer(
+                    components = components,
+                    onComponentStateChanged = { updatedComponent ->
+                        components = components.map { 
+                            if (it.id == updatedComponent.id) updatedComponent else it 
+                        }
+                        // State değişikliğini kaydet
+                        scope.launch {
+                            try {
+                                screenService.saveScreen("current_screen", components)
+                            } catch (e: Exception) {
+                                error = e.message
+                            }
+                        }
+                    }
+                )
             }
         }
     }
