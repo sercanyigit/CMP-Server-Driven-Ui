@@ -42,30 +42,30 @@ object ComponentFactory {
             ComponentType.TEXT_FIELD -> TextFieldComponent(
                 id = id,
                 position = position,
-                hint = "İpucu metni",
-                label = "Etiket"
+                hint = "Hint",
+                label = "Label"
             )
             ComponentType.CHECKBOX -> CheckboxComponent(
                 id = id,
                 position = position,
-                label = "Onay Kutusu"
+                label = "Checkbox"
             )
             ComponentType.RADIO_BUTTON -> RadioButtonComponent(
                 id = id,
                 position = position,
-                label = "Seçenek",
+                label = "Radio buton",
                 group = "grup1"
             )
             ComponentType.DROPDOWN -> DropdownComponent(
                 id = id,
                 position = position,
-                label = "Açılır Liste",
+                label = "Liste",
                 options = listOf("Seçenek 1", "Seçenek 2", "Seçenek 3")
             )
             ComponentType.SWITCH -> SwitchComponent(
                 id = id,
                 position = position,
-                label = "Anahtar"
+                label = "Switch"
             )
         }
     }

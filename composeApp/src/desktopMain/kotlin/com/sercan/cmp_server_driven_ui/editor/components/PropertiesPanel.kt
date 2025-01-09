@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.editor
+package com.sercan.cmp_server_driven_ui.editor.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -85,7 +85,7 @@ fun PropertiesPanel(
                 value = selectedComponent.position.x.toString(),
                 onValueChange = { str ->
                     str.toIntOrNull()?.let { x ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                        onComponentUpdated(updateComponentPosition(selectedComponent) {
                             it.copy(x = x) 
                         })
                     }
@@ -97,7 +97,7 @@ fun PropertiesPanel(
                 value = selectedComponent.position.y.toString(),
                 onValueChange = { str ->
                     str.toIntOrNull()?.let { y ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                        onComponentUpdated(updateComponentPosition(selectedComponent) {
                             it.copy(y = y) 
                         })
                     }
@@ -113,7 +113,7 @@ fun PropertiesPanel(
         WidthSizeSelector(
             currentSize = selectedComponent.position.widthSize,
             onSizeSelected = { newSize ->
-                onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                onComponentUpdated(updateComponentPosition(selectedComponent) {
                     it.copy(widthSize = newSize) 
                 })
             }
@@ -125,7 +125,7 @@ fun PropertiesPanel(
         AlignmentSelector(
             currentAlignment = selectedComponent.position.alignment,
             onAlignmentSelected = { newAlignment ->
-                onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                onComponentUpdated(updateComponentPosition(selectedComponent) {
                     it.copy(alignment = newAlignment) 
                 })
             }
@@ -143,7 +143,7 @@ fun PropertiesPanel(
                 value = selectedComponent.position.width.toString(),
                 onValueChange = { str ->
                     str.toIntOrNull()?.let { width ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                        onComponentUpdated(updateComponentPosition(selectedComponent) {
                             it.copy(width = width) 
                         })
                     }
@@ -155,7 +155,7 @@ fun PropertiesPanel(
                 value = selectedComponent.position.height.toString(),
                 onValueChange = { str ->
                     str.toIntOrNull()?.let { height ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                        onComponentUpdated(updateComponentPosition(selectedComponent) {
                             it.copy(height = height) 
                         })
                     }
@@ -253,7 +253,7 @@ private fun TextFieldComponentProperties(
             onValueChange = { 
                 onComponentUpdated(component.copy(hint = it))
             },
-            label = { Text("İpucu") },
+            label = { Text("TextField") },
             modifier = Modifier.fillMaxWidth()
         )
         
@@ -264,7 +264,7 @@ private fun TextFieldComponentProperties(
             onValueChange = { 
                 onComponentUpdated(component.copy(label = it))
             },
-            label = { Text("Etiket") },
+            label = { Text("Label") },
             modifier = Modifier.fillMaxWidth()
         )
     }

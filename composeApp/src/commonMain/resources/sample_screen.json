@@ -1,38 +1,12 @@
 [
     {
-        "type": "BUTTON",
-        "id": "button_0",
+        "type": "TEXT",
+        "id": "text_1",
         "position": {
             "x": 0,
             "y": 0,
-            "width": 160,
-            "height": 48,
-            "widthSize": "HALF"
+            "width": 328
         },
-        "text": "Buton"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_1",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160,
-            "height": 48,
-            "alignment": "CENTER"
-        },
-        "text": "Buton"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_2",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160,
-            "height": 48,
-            "alignment": "END"
-        },
-        "text": "Buton"
+        "text": "DENEME"
     }
 ]
