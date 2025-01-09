@@ -135,7 +135,7 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.sercan.cmp_server_driven_ui.MainKt"
+        mainClass = "com.sercan.cmp_server_driven_ui.desktop.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

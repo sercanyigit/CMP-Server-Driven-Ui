@@ -1,18 +1,46 @@
 package com.sercan.cmp_server_driven_ui.editor
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.model.*
+import com.sercan.cmp_server_driven_ui.model.ButtonComponent
+import com.sercan.cmp_server_driven_ui.model.CheckboxComponent
+import com.sercan.cmp_server_driven_ui.model.DropdownComponent
+import com.sercan.cmp_server_driven_ui.model.Position
+import com.sercan.cmp_server_driven_ui.model.RadioButtonComponent
+import com.sercan.cmp_server_driven_ui.model.SwitchComponent
+import com.sercan.cmp_server_driven_ui.model.TextComponent
+import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.model.UiComponent
 
 @Composable
 fun PropertiesPanel(
     selectedComponent: UiComponent?,
-    onComponentUpdated: (UiComponent) -> Unit
+    onComponentUpdated: (UiComponent) -> Unit,
+    onClearRequest: () -> Unit,
+    onSaveRequest: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -41,6 +69,7 @@ fun PropertiesPanel(
         Spacer(Modifier.height(8.dp))
 
         // Pozisyon özellikleri
+        Text("Konum", style = MaterialTheme.typography.labelMedium)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -73,6 +102,42 @@ fun PropertiesPanel(
 
         Spacer(Modifier.height(8.dp))
 
+        // Boyut özellikleri
+        Text("Boyut", style = MaterialTheme.typography.labelMedium)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TextField(
+                value = selectedComponent.position.width.toString(),
+                onValueChange = { str ->
+                    str.toIntOrNull()?.let { width ->
+                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                            it.copy(width = width) 
+                        })
+                    }
+                },
+                label = { Text("Genişlik") },
+                modifier = Modifier.weight(1f)
+            )
+            TextField(
+                value = selectedComponent.position.height.toString(),
+                onValueChange = { str ->
+                    str.toIntOrNull()?.let { height ->
+                        onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                            it.copy(height = height) 
+                        })
+                    }
+                },
+                label = { Text("Yükseklik") },
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(Modifier.height(16.dp))
+        Divider()
+        Spacer(Modifier.height(16.dp))
+
         // Bileşene özel özellikler
         when (selectedComponent) {
             is TextComponent -> TextComponentProperties(selectedComponent, onComponentUpdated)
@@ -82,6 +147,36 @@ fun PropertiesPanel(
             is RadioButtonComponent -> RadioButtonComponentProperties(selectedComponent, onComponentUpdated)
             is DropdownComponent -> DropdownComponentProperties(selectedComponent, onComponentUpdated)
             is SwitchComponent -> SwitchComponentProperties(selectedComponent, onComponentUpdated)
+        }
+
+        Spacer(Modifier.weight(1f))
+        
+        // Butonlar
+        Button(
+            onClick = onClearRequest,
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error
+            )
+        ) {
+            Icon(
+                Icons.Default.Delete,
+                contentDescription = "Temizle",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Temizle")
+        }
+
+        Button(
+            onClick = onSaveRequest,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                Icons.Default.Add,
+                contentDescription = "Kaydet",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Kaydet")
         }
     }
 }

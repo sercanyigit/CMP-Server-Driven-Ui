@@ -1,40 +1,112 @@
 [
     {
+        "type": "TEXT",
+        "id": "text_0",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328
+        },
+        "text": "Metin"
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_1",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160,
+            "height": 48
+        },
+        "text": "Buton"
+    },
+    {
         "type": "TEXT_FIELD",
         "id": "text_field_2",
         "position": {
-            "x": 10,
-            "y": 10
-        },
-        "hint": "İpucu metni",
-        "label": "Etiketdfdd"
-    },
-    {
-        "type": "CHECKBOX",
-        "id": "checkbox_3",
-        "position": {
-            "x": 12,
-            "y": 111
-        },
-        "label": "Onay Kutusu"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "text_field_4",
-        "position": {
-            "x": 18,
-            "y": 148
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 56
         },
         "hint": "İpucu metni",
         "label": "Etiket"
     },
     {
         "type": "CHECKBOX",
-        "id": "checkbox_5",
+        "id": "checkbox_3",
         "position": {
-            "x": 16,
-            "y": 179
+            "x": 0,
+            "y": 0,
+            "width": 160
         },
         "label": "Onay Kutusu"
+    },
+    {
+        "type": "RADIO_BUTTON",
+        "id": "radio_button_4",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160
+        },
+        "label": "Seçenek",
+        "group": "grup1"
+    },
+    {
+        "type": "DROPDOWN",
+        "id": "dropdown_5",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 180
+        },
+        "label": "Açılır Liste",
+        "options": [
+            "Seçenek 1",
+            "Seçenek 2",
+            "Seçenek 3"
+        ]
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_6",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160
+        },
+        "label": "Anahtar"
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_7",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160
+        },
+        "label": "Anahtar"
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_8",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 160
+        },
+        "label": "Anahtar"
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_9",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 180
+        },
+        "label": "Anahtar"
     }
 ]

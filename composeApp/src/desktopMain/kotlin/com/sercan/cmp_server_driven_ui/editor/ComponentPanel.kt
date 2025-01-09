@@ -40,8 +40,16 @@ fun ComponentPanel(
         if (searchQuery.isEmpty()) {
             componentTypes
         } else {
-            componentTypes.filter { 
-                it.name.contains(searchQuery, ignoreCase = true) 
+            componentTypes.filter { componentType -> 
+                when (componentType) {
+                    ComponentType.TEXT -> "Metin"
+                    ComponentType.BUTTON -> "Buton"
+                    ComponentType.TEXT_FIELD -> "Metin Alanı"
+                    ComponentType.CHECKBOX -> "Onay Kutusu"
+                    ComponentType.RADIO_BUTTON -> "Radyo Düğmesi"
+                    ComponentType.DROPDOWN -> "Açılır Liste"
+                    ComponentType.SWITCH -> "Anahtar"
+                }.contains(searchQuery, ignoreCase = true)
             }
         }
     }

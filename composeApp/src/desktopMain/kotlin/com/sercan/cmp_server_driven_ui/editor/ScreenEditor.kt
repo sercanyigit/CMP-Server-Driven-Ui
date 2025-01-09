@@ -3,23 +3,23 @@ package com.sercan.cmp_server_driven_ui.editor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.*
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
 import com.sercan.cmp_server_driven_ui.renderer.ComponentRenderer
 import kotlinx.coroutines.launch
+
+// ComponentPanel ve ComponentFactory'yi aynı pakette olduğu için direkt import ediyoruz
+import com.sercan.cmp_server_driven_ui.editor.ComponentFactory.createComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,48 +80,6 @@ fun ScreenEditor() {
                         }
                     }
                 )
-
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.BottomEnd)
-                ) {
-                    // Temizle butonu
-                    Button(
-                        onClick = { showClearConfirmation = true },
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error
-                        )
-                    ) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Temizle",
-                            modifier = Modifier.padding(end = 8.dp)
-                        )
-                        Text("Temizle")
-                    }
-
-                    // Kaydet butonu
-                    Button(
-                        onClick = {
-                            scope.launch {
-                                try {
-                                    screenService.saveScreen("current_screen", components)
-                                } catch (e: Exception) {
-                                    // Hata mesajı gösterilebilir
-                                }
-                            }
-                        }
-                    ) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = "Kaydet",
-                            modifier = Modifier.padding(end = 8.dp)
-                        )
-                        Text("Kaydet")
-                    }
-                }
             }
 
             // Sağ panel - Özellikler
@@ -130,6 +88,17 @@ fun ScreenEditor() {
                 onComponentUpdated = { updated ->
                     components = components.map { if (it.id == updated.id) updated else it }
                     selectedComponent = updated
+                },
+                onClearRequest = { showClearConfirmation = true },
+                onSaveRequest = {
+                    scope.launch {
+                        try {
+                            screenService.saveScreen("current_screen", components)
+                            // Başarılı kayıt mesajı gösterilebilir
+                        } catch (e: Exception) {
+                            // Hata mesajı gösterilebilir
+                        }
+                    }
                 }
             )
         }
@@ -210,16 +179,69 @@ private fun DesignCanvas(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
-            .border(1.dp, MaterialTheme.colorScheme.outline)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(32.dp),
+        contentAlignment = Alignment.Center
     ) {
-        components.forEach { component ->
-            DraggableComponent(
-                component = component,
-                isSelected = component == selectedComponent,
-                onSelected = { onComponentSelected(component) },
-                onMoved = { newPosition -> onComponentMoved(component, newPosition) }
-            )
+        // Telefon çerçevesi
+        Box(
+            modifier = Modifier
+                .width(360.dp) // Standart Android telefon genişliği
+                .height(640.dp) // ~16:9 aspect ratio
+                .background(MaterialTheme.colorScheme.surface)
+                .border(
+                    width = 16.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(32.dp)
+                )
+        ) {
+            // Grid sistemi
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // Componentleri grid hücrelerine yerleştir
+                var currentRow = mutableListOf<UiComponent>()
+                components.forEach { component ->
+                    if (currentRow.sumOf { it.position.width } + component.position.width > 360) {
+                        // Yeni satıra geç
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            currentRow.forEach { rowComponent ->
+                                DraggableComponent(
+                                    component = rowComponent,
+                                    isSelected = rowComponent == selectedComponent,
+                                    onSelected = { onComponentSelected(rowComponent) },
+                                    onMoved = { newPosition -> onComponentMoved(rowComponent, newPosition) }
+                                )
+                            }
+                        }
+                        currentRow = mutableListOf(component)
+                    } else {
+                        currentRow.add(component)
+                    }
+                }
+                // Son satırı ekle
+                if (currentRow.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        currentRow.forEach { rowComponent ->
+                            DraggableComponent(
+                                component = rowComponent,
+                                isSelected = rowComponent == selectedComponent,
+                                onSelected = { onComponentSelected(rowComponent) },
+                                onMoved = { newPosition -> onComponentMoved(rowComponent, newPosition) }
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -231,27 +253,15 @@ private fun DraggableComponent(
     onSelected: () -> Unit,
     onMoved: (Position) -> Unit
 ) {
-    var position by remember { mutableStateOf(component.position) }
-
     Box(
         modifier = Modifier
-            .offset(position.x.dp, position.y.dp)
-            .size(position.width.dp, position.height.dp)
+            .width(component.position.width.dp)
+            .height(component.position.height.dp)
             .border(
                 width = if (isSelected) 2.dp else 1.dp,
                 color = if (isSelected) MaterialTheme.colorScheme.primary 
                        else MaterialTheme.colorScheme.outline
             )
-            .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
-                    change.consume()
-                    position = position.copy(
-                        x = (position.x + dragAmount.x).toInt(),
-                        y = (position.y + dragAmount.y).toInt()
-                    )
-                    onMoved(position)
-                }
-            }
             .clickable { onSelected() }
     ) {
         ComponentRenderer(component)
