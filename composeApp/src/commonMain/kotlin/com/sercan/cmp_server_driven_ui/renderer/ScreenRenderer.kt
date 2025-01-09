@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
@@ -26,53 +25,128 @@ import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
+import com.sercan.cmp_server_driven_ui.util.toModifier
 
 @Composable
 fun ScreenRenderer(
     components: List<UiComponent>,
-    onComponentStateChanged: (UiComponent) -> Unit = {}
+    onComponentStateChanged: (UiComponent) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        var currentRow = mutableListOf<UiComponent>()
         components.forEach { component ->
-            if (currentRow.sumOf { it.position.width } + component.position.width > 360) {
-                // Yeni satıra geç
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    currentRow.forEach { rowComponent ->
-                        ComponentRenderer(
-                            component = rowComponent,
-                            onStateChanged = onComponentStateChanged
+            val modifier = component.position.toModifier()
+            
+            when (component) {
+                is TextComponent -> {
+                    Text(
+                        text = component.text,
+                        modifier = modifier.then(
+                            component.style?.toModifier() ?: Modifier
                         )
+                    )
+                }
+                is ButtonComponent -> {
+                    Button(
+                        onClick = { /* onClick işlemi */ },
+                        modifier = modifier.then(
+                            component.style?.toModifier() ?: Modifier
+                        )
+                    ) {
+                        Text(component.text)
                     }
                 }
-                currentRow = mutableListOf(component)
-            } else {
-                currentRow.add(component)
-            }
-        }
-        // Son satırı ekle
-        if (currentRow.isNotEmpty()) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                currentRow.forEach { rowComponent ->
-                    ComponentRenderer(
-                        component = rowComponent,
-                        onStateChanged = onComponentStateChanged
+                is TextFieldComponent -> {
+                    TextField(
+                        value = component.hint,
+                        onValueChange = { 
+                            onComponentStateChanged(component.copy(hint = it))
+                        },
+                        label = { Text(component.label ?: "") },
+                        modifier = modifier.then(
+                            component.style?.toModifier() ?: Modifier
+                        )
                     )
+                }
+                is CheckboxComponent -> {
+                    Row(
+                        modifier = modifier.then(component.style?.toModifier() ?: Modifier),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = component.isChecked,
+                            onCheckedChange = { 
+                                onComponentStateChanged(component.copy(isChecked = it))
+                            }
+                        )
+                        Text(component.label)
+                    }
+                }
+                is RadioButtonComponent -> {
+                    Row(
+                        modifier = modifier.then(component.style?.toModifier() ?: Modifier),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = component.isSelected,
+                            onClick = { 
+                                onComponentStateChanged(component.copy(isSelected = !component.isSelected))
+                            }
+                        )
+                        Text(component.label)
+                    }
+                }
+                is DropdownComponent -> {
+                    var expanded by remember { mutableStateOf(false) }
+                    Column(
+                        modifier = modifier.then(component.style?.toModifier() ?: Modifier)
+                    ) {
+                        OutlinedButton(
+                            onClick = { expanded = true },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(component.selectedOption ?: component.label)
+                            Icon(Icons.Default.ArrowDropDown, null)
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            component.options.forEach { option ->
+                                DropdownMenuItem(
+                                    text = { Text(option) },
+                                    onClick = {
+                                        expanded = false
+                                        onComponentStateChanged(component.copy(selectedOption = option))
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+                is SwitchComponent -> {
+                    Row(
+                        modifier = modifier.then(component.style?.toModifier() ?: Modifier),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(component.label)
+                        Switch(
+                            checked = component.isChecked,
+                            onCheckedChange = { 
+                                onComponentStateChanged(component.copy(isChecked = it))
+                            }
+                        )
+                    }
                 }
             }
         }

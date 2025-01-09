@@ -1,5 +1,6 @@
 package com.sercan.cmp_server_driven_ui.editor
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,6 +36,7 @@ import com.sercan.cmp_server_driven_ui.model.SwitchComponent
 import com.sercan.cmp_server_driven_ui.model.TextComponent
 import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.model.UiComponent
+import com.sercan.cmp_server_driven_ui.model.WidthSize
 
 @Composable
 fun PropertiesPanel(
@@ -100,7 +103,19 @@ fun PropertiesPanel(
             )
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(16.dp))
+
+        // Genişlik türü seçici
+        WidthSizeSelector(
+            currentSize = selectedComponent.position.widthSize,
+            onSizeSelected = { newSize ->
+                onComponentUpdated(updateComponentPosition(selectedComponent) { 
+                    it.copy(widthSize = newSize) 
+                })
+            }
+        )
+
+        Spacer(Modifier.height(16.dp))
 
         // Boyut özellikleri
         Text("Boyut", style = MaterialTheme.typography.labelMedium)
@@ -311,6 +326,56 @@ private fun SwitchComponentProperties(
             checked = component.isChecked,
             onCheckedChange = { onComponentUpdated(component.copy(isChecked = it)) }
         )
+    }
+}
+
+@Composable
+private fun WidthSizeSelector(
+    currentSize: WidthSize,
+    onSizeSelected: (WidthSize) -> Unit
+) {
+    Column {
+        Text(
+            "Genişlik Türü", 
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            WidthSize.values().forEach { size ->
+                OutlinedButton(
+                    onClick = { onSizeSelected(size) },
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = if (size == currentSize) 
+                            MaterialTheme.colorScheme.primaryContainer 
+                        else 
+                            MaterialTheme.colorScheme.surface
+                    ),
+                    border = BorderStroke(
+                        1.dp,
+                        if (size == currentSize)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.outline
+                    )
+                ) {
+                    Text(
+                        when (size) {
+                            WidthSize.FIXED -> "Sabit"
+                            WidthSize.HALF -> "Yarım"
+                            WidthSize.FULL -> "Tam"
+                        },
+                        color = if (size == currentSize)
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        else
+                            MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        }
     }
 }
 

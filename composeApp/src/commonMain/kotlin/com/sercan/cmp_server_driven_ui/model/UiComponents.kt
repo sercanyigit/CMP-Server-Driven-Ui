@@ -17,8 +17,21 @@ data class Position(
     val x: Int,
     val y: Int,
     val width: Int = 100,
-    val height: Int = 40
+    val height: Int = 40,
+    val widthSize: WidthSize = WidthSize.FIXED
 )
+
+@Serializable
+enum class WidthSize {
+    @SerialName("FIXED")
+    FIXED,
+    
+    @SerialName("HALF")
+    HALF,
+    
+    @SerialName("FULL")
+    FULL
+}
 
 @Serializable
 data class ComponentStyle(
@@ -26,7 +39,8 @@ data class ComponentStyle(
     val textColor: String? = null,
     val fontSize: Int? = null,
     val padding: Int? = null,
-    val cornerRadius: Int? = null
+    val cornerRadius: Int? = null,
+    val horizontalPadding: Int? = null
 )
 
 @Serializable

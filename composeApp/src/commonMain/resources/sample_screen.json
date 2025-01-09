@@ -1,13 +1,15 @@
 [
     {
-        "type": "TEXT",
-        "id": "text_0",
+        "type": "BUTTON",
+        "id": "button_1",
         "position": {
             "x": 0,
             "y": 0,
-            "width": 328
+            "width": 160,
+            "height": 48,
+            "widthSize": "FULL"
         },
-        "text": "asdasd"
+        "text": "Gönder"
     },
     {
         "type": "TEXT_FIELD",
@@ -16,65 +18,22 @@
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 56
+            "height": 56,
+            "widthSize": "FULL"
         },
         "hint": "İpucu metni",
         "label": "Etiket"
     },
     {
-        "type": "CHECKBOX",
-        "id": "checkbox_3",
+        "type": "BUTTON",
+        "id": "button_3",
         "position": {
             "x": 0,
             "y": 0,
-            "width": 160
+            "width": 160,
+            "height": 48,
+            "widthSize": "HALF"
         },
-        "label": "Onay Kutusu",
-        "isChecked": true
-    },
-    {
-        "type": "RADIO_BUTTON",
-        "id": "radio_button_4",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 160
-        },
-        "label": "Seçenek",
-        "group": "grup1"
-    },
-    {
-        "type": "TEXT",
-        "id": "text_0",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328
-        },
-        "text": "asdasd"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "text_field_1",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 56
-        },
-        "hint": "asdasda",
-        "label": "Etiket"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "text_field_2",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 56
-        },
-        "hint": "İpucu metni",
-        "label": "Etiket"
+        "text": "Buton"
     }
 ]
