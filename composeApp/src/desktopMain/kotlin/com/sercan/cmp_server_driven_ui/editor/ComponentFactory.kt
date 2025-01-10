@@ -39,7 +39,7 @@ object ComponentFactory {
             ComponentType.CHECKBOX -> CheckboxComponent(
                 id = generateComponentId("checkbox"),
                 position = defaultPosition,
-                label = "Checkbox"
+                options = listOf("Seçenek 1", "Seçenek 2")
             )
             ComponentType.RADIO_BUTTON -> RadioButtonComponent(
                 id = generateComponentId("radiobutton"),

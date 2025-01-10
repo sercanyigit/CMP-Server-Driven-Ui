@@ -129,8 +129,8 @@ data class CheckboxComponent(
     override val type: ComponentType = ComponentType.CHECKBOX,
     override val position: Position,
     override val style: ComponentStyle? = null,
-    val label: String,
-    val isChecked: Boolean = false
+    val options: List<String> = listOf("Seçenek 1", "Seçenek 2"),
+    val selectedOptions: List<String> = emptyList()
 ) : UiComponent()
 
 @Serializable

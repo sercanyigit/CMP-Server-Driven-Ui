@@ -102,19 +102,33 @@ fun ScreenRenderer(
                 is CheckboxComponent -> {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = component.position.toModifier().then(
                             component.style?.toModifier() ?: Modifier
                         ).fillMaxWidth()
                     ) {
-                        Checkbox(
-                            checked = component.isChecked,
-                            onCheckedChange = { onComponentStateChanged(component.copy(isChecked = it)) }
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            component.label,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                        component.options.forEach { option ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Checkbox(
+                                    checked = option in component.selectedOptions,
+                                    onCheckedChange = { isChecked -> 
+                                        val updatedSelection = if (isChecked) {
+                                            component.selectedOptions + option
+                                        } else {
+                                            component.selectedOptions - option
+                                        }
+                                        onComponentStateChanged(component.copy(selectedOptions = updatedSelection))
+                                    }
+                                )
+                                Text(
+                                    option,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        }
                     }
                 }
                 is RadioButtonComponent -> {
@@ -263,13 +277,25 @@ fun ComponentRenderer(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Checkbox(
-                        checked = component.isChecked,
-                        onCheckedChange = { isChecked ->
-                            onStateChanged(component.copy(isChecked = isChecked))
+                    component.options.forEach { option ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Checkbox(
+                                checked = option in component.selectedOptions,
+                                onCheckedChange = { isChecked -> 
+                                    val updatedSelection = if (isChecked) {
+                                        component.selectedOptions + option
+                                    } else {
+                                        component.selectedOptions - option
+                                    }
+                                    onStateChanged(component.copy(selectedOptions = updatedSelection))
+                                }
+                            )
+                            Text(option)
                         }
-                    )
-                    Text(component.label)
+                    }
                 }
             }
             is RadioButtonComponent -> {

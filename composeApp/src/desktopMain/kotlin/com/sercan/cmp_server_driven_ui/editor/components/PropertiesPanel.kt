@@ -340,17 +340,88 @@ private fun CheckboxComponentProperties(
     component: CheckboxComponent,
     onComponentUpdated: (UiComponent) -> Unit
 ) {
-    Column {
-        TextField(
-            value = component.label,
-            onValueChange = { onComponentUpdated(component.copy(label = it)) },
-            label = { Text("Etiket") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Checkbox(
-            checked = component.isChecked,
-            onCheckedChange = { onComponentUpdated(component.copy(isChecked = it)) }
-        )
+    var newOption by remember { mutableStateOf("") }
+    
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        // Seçili öğeler
+        Text("Seçenekler", style = MaterialTheme.typography.labelMedium)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            component.options.forEach { option ->
+                FilterChip(
+                    selected = option in component.selectedOptions,
+                    onClick = {
+                        val updatedSelection = if (option in component.selectedOptions) {
+                            component.selectedOptions - option
+                        } else {
+                            component.selectedOptions + option
+                        }
+                        onComponentUpdated(component.copy(selectedOptions = updatedSelection))
+                    },
+                    label = { Text(option) }
+                )
+            }
+        }
+
+        // Seçenekleri düzenleme
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            OutlinedTextField(
+                value = newOption,
+                onValueChange = { newOption = it },
+                label = { Text("Yeni Seçenek") },
+                modifier = Modifier.weight(1f)
+            )
+            Button(
+                onClick = {
+                    if (newOption.isNotEmpty()) {
+                        val updatedOptions = component.options + newOption
+                        onComponentUpdated(component.copy(
+                            options = if (updatedOptions.size <= 2) updatedOptions else component.options
+                        ))
+                        newOption = ""
+                    }
+                },
+                enabled = newOption.isNotEmpty() && component.options.size < 2
+            ) {
+                Icon(Icons.Default.Check, contentDescription = "Ekle")
+            }
+        }
+
+        // Mevcut seçenekler
+        if (component.options.isNotEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                component.options.forEach { option ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = option,
+                            modifier = Modifier.weight(1f)
+                        )
+                        IconButton(
+                            onClick = {
+                                val updatedOptions = component.options - option
+                                onComponentUpdated(component.copy(
+                                    options = updatedOptions,
+                                    selectedOptions = component.selectedOptions - option
+                                ))
+                            }
+                        ) {
+                            Icon(Icons.Default.Delete, contentDescription = "Sil")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -551,18 +622,3 @@ private fun SwitchComponentProperties(
         )
     }
 }
-
-private fun updateComponentPosition(
-    component: UiComponent,
-    update: (Position) -> Position
-): UiComponent {
-    return when (component) {
-        is TextComponent -> component.copy(position = update(component.position))
-        is ButtonComponent -> component.copy(position = update(component.position))
-        is TextFieldComponent -> component.copy(position = update(component.position))
-        is CheckboxComponent -> component.copy(position = update(component.position))
-        is RadioButtonComponent -> component.copy(position = update(component.position))
-        is DropdownComponent -> component.copy(position = update(component.position))
-        is SwitchComponent -> component.copy(position = update(component.position))
-    }
-} 

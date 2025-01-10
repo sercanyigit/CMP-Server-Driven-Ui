@@ -50,7 +50,10 @@
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "label": "Checkbox"
+        "options": [
+            "hhgg",
+            "ıuyy"
+        ]
     },
     {
         "type": "RADIO_BUTTON",
