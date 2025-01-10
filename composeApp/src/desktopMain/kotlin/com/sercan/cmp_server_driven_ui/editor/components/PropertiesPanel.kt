@@ -150,66 +150,6 @@ fun PropertiesPanel(
                         modifier = Modifier.weight(1f)
                     )
                 }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Genişlik türü seçimi
-                Text("Genişlik Türü", style = MaterialTheme.typography.labelMedium)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    WidthSize.values().forEach { widthSize ->
-                        FilterChip(
-                            selected = localPosition.widthSize == widthSize,
-                            onClick = {
-                                val newPosition = localPosition.copy(widthSize = widthSize)
-                                localPosition = newPosition
-                                onComponentUpdated(
-                                    when (selectedComponent) {
-                                        is TextComponent -> selectedComponent.copy(position = newPosition)
-                                        is ButtonComponent -> selectedComponent.copy(position = newPosition)
-                                        is TextFieldComponent -> selectedComponent.copy(position = newPosition)
-                                        is CheckboxComponent -> selectedComponent.copy(position = newPosition)
-                                        is RadioButtonComponent -> selectedComponent.copy(position = newPosition)
-                                        is DropdownComponent -> selectedComponent.copy(position = newPosition)
-                                        is SwitchComponent -> selectedComponent.copy(position = newPosition)
-                                    }
-                                )
-                            },
-                            label = { Text(widthSize.name) }
-                        )
-                    }
-                }
-
-                // Hizalama seçimi
-                Text("Hizalama", style = MaterialTheme.typography.labelMedium)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    HorizontalAlignment.values().forEach { alignment ->
-                        FilterChip(
-                            selected = localPosition.alignment == alignment,
-                            onClick = {
-                                val newPosition = localPosition.copy(alignment = alignment)
-                                localPosition = newPosition
-                                onComponentUpdated(
-                                    when (selectedComponent) {
-                                        is TextComponent -> selectedComponent.copy(position = newPosition)
-                                        is ButtonComponent -> selectedComponent.copy(position = newPosition)
-                                        is TextFieldComponent -> selectedComponent.copy(position = newPosition)
-                                        is CheckboxComponent -> selectedComponent.copy(position = newPosition)
-                                        is RadioButtonComponent -> selectedComponent.copy(position = newPosition)
-                                        is DropdownComponent -> selectedComponent.copy(position = newPosition)
-                                        is SwitchComponent -> selectedComponent.copy(position = newPosition)
-                                    }
-                                )
-                            },
-                            label = { Text(alignment.name) }
-                        )
-                    }
-                }
             }
         }
 

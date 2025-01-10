@@ -38,12 +38,12 @@ enum class HorizontalAlignment {
 
 @Serializable
 data class Position(
-    val x: Int,
-    val y: Int,
-    val width: Int = 100,
+    val x: Int = 0,
+    val y: Int = 0,
+    val width: Int = 300,
     val height: Int = 60,
-    val widthSize: WidthSize = WidthSize.FIXED,
-    val alignment: HorizontalAlignment = HorizontalAlignment.START
+    val widthSize: WidthSize = WidthSize.FULL,
+    val alignment: HorizontalAlignment = HorizontalAlignment.CENTER
 )
 
 @Serializable
@@ -92,7 +92,7 @@ data class TextComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.TEXT,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val text: String
 ) : UiComponent()
@@ -103,7 +103,7 @@ data class ButtonComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.BUTTON,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val text: String
 ) : UiComponent()
@@ -114,7 +114,7 @@ data class TextFieldComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.TEXT_FIELD,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val hint: String,
     val label: String? = null,
@@ -127,7 +127,7 @@ data class CheckboxComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.CHECKBOX,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val options: List<String> = listOf("Seçenek 1", "Seçenek 2"),
     val selectedOptions: List<String> = emptyList()
@@ -139,7 +139,7 @@ data class RadioButtonComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.RADIO_BUTTON,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val options: List<String> = listOf("Seçenek 1", "Seçenek 2"),
     val selectedOption: String? = null
@@ -151,7 +151,7 @@ data class DropdownComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.DROPDOWN,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val label: String,
     val options: List<String>,
@@ -164,7 +164,7 @@ data class SwitchComponent(
     override val id: String,
     @SerialName("componentType")
     override val type: ComponentType = ComponentType.SWITCH,
-    override val position: Position,
+    override val position: Position = Position(),
     override val style: ComponentStyle? = null,
     val label: String,
     val isChecked: Boolean = false
