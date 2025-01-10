@@ -12,11 +12,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -222,6 +228,8 @@ fun PropertiesPanel(
                     contentColor = MaterialTheme.colorScheme.error
                 )
             ) {
+                Icon(Icons.Filled.Delete, contentDescription = "Temizle")
+                Spacer(Modifier.width(8.dp))
                 Text("Temizle")
             }
 
@@ -229,6 +237,8 @@ fun PropertiesPanel(
                 onClick = onSaveRequest,
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(Icons.Filled.Check, contentDescription = "Kaydet")
+                Spacer(Modifier.width(8.dp))
                 Text("Kaydet")
             }
         }
