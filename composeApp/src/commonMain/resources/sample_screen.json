@@ -1,7 +1,7 @@
 [
     {
-        "type": "TEXT_FIELD",
-        "id": "text_field_1",
+        "type": "TEXT",
+        "id": "text_02ed7175",
         "position": {
             "x": 0,
             "y": 0,
@@ -10,55 +10,11 @@
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "hint": "Adınızı giriniz",
-        "label": "Ad",
-        "value": "Sercan"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "text_field_2",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 60,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "hint": "Soyadınızı giriniz",
-        "label": "Soyad",
-        "value": "Yiğit"
-    },
-    {
-        "type": "CHECKBOX",
-        "id": "checkbox_3",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 60,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "label": "Ehliyet",
-        "isChecked": true
-    },
-    {
-        "type": "SWITCH",
-        "id": "switch_5",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 60,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "label": "Şartları Kabul et"
+        "text": "Metin"
     },
     {
         "type": "BUTTON",
-        "id": "button_6",
+        "id": "button_576259d3",
         "position": {
             "x": 0,
             "y": 0,
@@ -67,11 +23,11 @@
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "text": "Tamam"
+        "text": "Buton"
     },
     {
-        "type": "TEXT",
-        "id": "text_0",
+        "type": "CHECKBOX",
+        "id": "checkbox_68932d15",
         "position": {
             "x": 0,
             "y": 0,
@@ -80,6 +36,33 @@
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "text": "Deneme"
+        "label": "Checkbox"
+    },
+    {
+        "type": "RADIO_BUTTON",
+        "id": "radiobutton_fe7cd57b",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "label": "Radio buton",
+        "group": "grup1"
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_9d0255c1",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "label": "Switch"
     }
 ]

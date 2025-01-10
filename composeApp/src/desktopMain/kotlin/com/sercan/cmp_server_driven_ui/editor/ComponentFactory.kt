@@ -1,10 +1,14 @@
 package com.sercan.cmp_server_driven_ui.editor
 
 import com.sercan.cmp_server_driven_ui.model.*
+import java.util.UUID
 
 object ComponentFactory {
+    private fun generateComponentId(componentName: String): String {
+        return "${componentName}_${UUID.randomUUID().toString().take(12)}"
+    }
+
     fun createComponent(type: ComponentType, index: Int): UiComponent {
-        val id = "${type.name.lowercase()}_$index"
         val defaultPosition = Position(
             x = 0,
             y = 0,
@@ -16,45 +20,45 @@ object ComponentFactory {
 
         return when (type) {
             ComponentType.TEXT -> TextComponent(
-                id = id,
+                id = generateComponentId("text"),
                 position = defaultPosition,
                 text = "Metin"
             )
             ComponentType.BUTTON -> ButtonComponent(
-                id = id,
+                id = generateComponentId("button"),
                 position = defaultPosition,
                 text = "Buton"
             )
             ComponentType.TEXT_FIELD -> TextFieldComponent(
-                id =id,
+                id = generateComponentId("textfield"),
                 hint = "Hint",
                 label = "Label",
                 value = "Value",
                 position = defaultPosition
             )
             ComponentType.CHECKBOX -> CheckboxComponent(
-                id = id,
+                id = generateComponentId("checkbox"),
                 position = defaultPosition,
                 label = "Checkbox"
             )
             ComponentType.RADIO_BUTTON -> RadioButtonComponent(
-                id = id,
+                id = generateComponentId("radiobutton"),
                 position = defaultPosition,
                 label = "Radio buton",
                 group = "grup1"
             )
             ComponentType.DROPDOWN -> DropdownComponent(
-                id = id,
+                id = generateComponentId("dropdown"),
                 label = "Dropdown",
                 options = listOf("Seçenek 1", "Seçenek 2", "Seçenek 3"),
                 position = defaultPosition
             )
             ComponentType.SWITCH -> SwitchComponent(
-                id = "switch_$index",
+                id = generateComponentId("switch"),
                 label = "Switch",
                 isChecked = false,
                 position = defaultPosition
             )
         }
     }
-} 
+}
