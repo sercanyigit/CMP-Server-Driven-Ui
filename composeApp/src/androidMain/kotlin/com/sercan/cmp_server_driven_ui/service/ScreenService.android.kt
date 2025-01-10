@@ -5,6 +5,7 @@ import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
+import com.sercan.cmp_server_driven_ui.util.Constant
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -51,7 +52,7 @@ actual class ScreenService {
             val classLoader = ScreenService::class.java.classLoader
                 ?: throw Exception("ClassLoader bulunamadı")
             
-            classLoader.getResourceAsStream("sample_screen.json")?.bufferedReader()?.use { 
+            classLoader.getResourceAsStream(Constant.jsonFileName)?.bufferedReader()?.use {
                 it.readText() 
             } ?: throw Exception("sample_screen.json bulunamadı")
         } catch (e: Exception) {

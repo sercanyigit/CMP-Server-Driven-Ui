@@ -1,62 +1,24 @@
 [
     {
-        "type": "TEXT",
-        "id": "text_bfa797b2-bb2",
+        "type": "RADIO_BUTTON",
+        "id": "radiobutton_690e7ac0-b8c",
         "position": {
             "width": 328
-        },
-        "text": "Metin"
+        }
+    },
+    {
+        "type": "CHECKBOX",
+        "id": "checkbox_2fc38342-ce4",
+        "position": {
+            "width": 328
+        }
     },
     {
         "type": "BUTTON",
-        "id": "button_4e6eb1de-24c",
+        "id": "button_388383d4-1f6",
         "position": {
             "width": 328
         },
         "text": "Buton"
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "textfield_f5b2b48d-c19",
-        "position": {
-            "width": 328
-        },
-        "hint": "Hint",
-        "label": "Label"
-    },
-    {
-        "type": "CHECKBOX",
-        "id": "checkbox_9fdda3e9-5b1",
-        "position": {
-            "width": 328
-        }
-    },
-    {
-        "type": "RADIO_BUTTON",
-        "id": "radiobutton_bbecc2f4-0e3",
-        "position": {
-            "width": 328
-        }
-    },
-    {
-        "type": "DROPDOWN",
-        "id": "dropdown_365fb5b3-d7e",
-        "position": {
-            "width": 328
-        },
-        "label": "Dropdown",
-        "options": [
-            "Seçenek 1",
-            "Seçenek 2",
-            "Seçenek 3"
-        ]
-    },
-    {
-        "type": "SWITCH",
-        "id": "switch_22c3df40-f42",
-        "position": {
-            "width": 328
-        },
-        "label": "Switch"
     }
 ]

@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.MobileScreenRenderer
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
+import com.sercan.cmp_server_driven_ui.util.Constant
 import kotlinx.coroutines.launch
 
 expect fun getPlatformName(): String
@@ -49,7 +50,7 @@ fun MobileApp() {
     
     LaunchedEffect(Unit) {
         try {
-            val loadedComponents = screenService.loadScreen("current_screen")
+            val loadedComponents = screenService.loadScreen(Constant.homeScreen)
             println("Yüklenen componentler: ${loadedComponents.size}")
             components = loadedComponents
         } catch (e: Exception) {
@@ -76,7 +77,7 @@ fun MobileApp() {
                         isLoading = true
                         scope.launch {
                             try {
-                                components = screenService.loadScreen("current_screen")
+                                components = screenService.loadScreen(Constant.homeScreen)
                             } catch (e: Exception) {
                                 error = e.message
                             } finally {
@@ -104,7 +105,7 @@ fun MobileApp() {
                         }
                         scope.launch {
                             try {
-                                screenService.saveScreen("current_screen", components)
+                                screenService.saveScreen(Constant.homeScreen, components)
                             } catch (e: Exception) {
                                 error = e.message
                             }

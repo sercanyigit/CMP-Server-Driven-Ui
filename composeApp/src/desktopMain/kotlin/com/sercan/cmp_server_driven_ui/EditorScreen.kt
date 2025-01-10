@@ -42,6 +42,7 @@ import com.sercan.cmp_server_driven_ui.editor.propertiespanel.PropertiesPanelCom
 import com.sercan.cmp_server_driven_ui.editor.screendesign.DesignCanvas
 import com.sercan.cmp_server_driven_ui.editor.searchcomponents.SearchComponentsPanel
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
+import com.sercan.cmp_server_driven_ui.util.Constant
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +68,7 @@ actual fun EditorScreen() {
 
             LaunchedEffect(Unit) {
                 try {
-                    components = screenService.loadScreen("current_screen")
+                    components = screenService.loadScreen(Constant.homeScreen)
                 } catch (e: Exception) {
                     println(e)
                 }
@@ -125,7 +126,7 @@ actual fun EditorScreen() {
                         onSaveRequest = {
                             scope.launch {
                                 try {
-                                    screenService.saveScreen("current_screen", components)
+                                    screenService.saveScreen(Constant.homeScreen, components)
                                     scope.launch {
                                         snackbarHostState.showSnackbar("Ekran başarıyla kaydedildi")
                                     }
