@@ -141,9 +141,8 @@ data class RadioButtonComponent(
     override val type: ComponentType = ComponentType.RADIO_BUTTON,
     override val position: Position,
     override val style: ComponentStyle? = null,
-    val label: String,
-    val group: String,
-    val isSelected: Boolean = false
+    val options: List<String> = listOf("Seçenek 1", "Seçenek 2"),
+    val selectedOption: String? = null
 ) : UiComponent()
 
 @Serializable

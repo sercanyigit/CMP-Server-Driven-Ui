@@ -44,8 +44,7 @@ object ComponentFactory {
             ComponentType.RADIO_BUTTON -> RadioButtonComponent(
                 id = generateComponentId("radiobutton"),
                 position = defaultPosition,
-                label = "Radio buton",
-                group = "grup1"
+                options = listOf("Seçenek 1", "Seçenek 2")
             )
             ComponentType.DROPDOWN -> DropdownComponent(
                 id = generateComponentId("dropdown"),

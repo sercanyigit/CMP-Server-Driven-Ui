@@ -1,7 +1,7 @@
 [
     {
         "type": "TEXT",
-        "id": "text_02ed7175",
+        "id": "text_020065a0-e83",
         "position": {
             "x": 0,
             "y": 0,
@@ -14,7 +14,7 @@
     },
     {
         "type": "BUTTON",
-        "id": "button_576259d3",
+        "id": "button_c11a78d7-47f",
         "position": {
             "x": 0,
             "y": 0,
@@ -26,8 +26,22 @@
         "text": "Buton"
     },
     {
+        "type": "TEXT_FIELD",
+        "id": "textfield_aaf7843c-014",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "hint": "Hint",
+        "label": "Label"
+    },
+    {
         "type": "CHECKBOX",
-        "id": "checkbox_68932d15",
+        "id": "checkbox_fd319b99-b89",
         "position": {
             "x": 0,
             "y": 0,
@@ -40,7 +54,19 @@
     },
     {
         "type": "RADIO_BUTTON",
-        "id": "radiobutton_fe7cd57b",
+        "id": "radiobutton_2a8fc132-0c7",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        }
+    },
+    {
+        "type": "DROPDOWN",
+        "id": "dropdown_d03854e8-309",
         "position": {
             "x": 0,
             "y": 0,
@@ -49,12 +75,16 @@
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "label": "Radio buton",
-        "group": "grup1"
+        "label": "Dropdown",
+        "options": [
+            "Seçenek 1",
+            "Seçenek 2",
+            "Seçenek 3"
+        ]
     },
     {
         "type": "SWITCH",
-        "id": "switch_9d0255c1",
+        "id": "switch_21f9e99f-60c",
         "position": {
             "x": 0,
             "y": 0,

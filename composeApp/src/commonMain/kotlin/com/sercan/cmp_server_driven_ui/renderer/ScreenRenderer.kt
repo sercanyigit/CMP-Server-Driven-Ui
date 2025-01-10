@@ -120,19 +120,28 @@ fun ScreenRenderer(
                 is RadioButtonComponent -> {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = component.position.toModifier().then(
                             component.style?.toModifier() ?: Modifier
                         ).fillMaxWidth()
                     ) {
-                        RadioButton(
-                            selected = component.isSelected,
-                            onClick = { onComponentStateChanged(component.copy(isSelected = !component.isSelected)) }
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            component.label,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                        component.options.forEach { option ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                RadioButton(
+                                    selected = component.selectedOption == option,
+                                    onClick = { 
+                                        onComponentStateChanged(component.copy(selectedOption = option))
+                                    }
+                                )
+                                Text(
+                                    option,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        }
                     }
                 }
                 is DropdownComponent -> {
@@ -269,13 +278,20 @@ fun ComponentRenderer(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    RadioButton(
-                        selected = component.isSelected,
-                        onClick = {
-                            onStateChanged(component.copy(isSelected = !component.isSelected))
+                    component.options.forEach { option ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            RadioButton(
+                                selected = component.selectedOption == option,
+                                onClick = { 
+                                    onStateChanged(component.copy(selectedOption = option))
+                                }
+                            )
+                            Text(option)
                         }
-                    )
-                    Text(component.label)
+                    }
                 }
             }
             is DropdownComponent -> {
