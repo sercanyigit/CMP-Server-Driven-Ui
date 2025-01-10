@@ -2,22 +2,24 @@ package com.sercan.cmp_server_driven_ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.model.UiComponent
-import com.sercan.cmp_server_driven_ui.renderer.ScreenRenderer
+import com.sercan.cmp_server_driven_ui.components.UiComponent
+import com.sercan.cmp_server_driven_ui.renderer.MobileScreenRenderer
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
-import com.sercan.cmp_server_driven_ui.service.ScreenService
 import kotlinx.coroutines.launch
 
 expect fun getPlatformName(): String
@@ -47,9 +49,8 @@ fun MobileApp() {
     
     LaunchedEffect(Unit) {
         try {
-            println("Ekran yükleme başladı")
             val loadedComponents = screenService.loadScreen("current_screen")
-            println("Yüklenen bileşenler: ${loadedComponents.size}")
+            println("Yüklenen componentler: ${loadedComponents.size}")
             components = loadedComponents
         } catch (e: Exception) {
             println("Ekran yüklenirken hata: ${e.message}")
@@ -65,8 +66,6 @@ fun MobileApp() {
             isLoading -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     CircularProgressIndicator()
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text("Ekran yükleniyor...")
                 }
             }
             error != null -> {
@@ -91,19 +90,18 @@ fun MobileApp() {
             }
             components.isEmpty() -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Bileşen bulunamadı")
+                    Text("Component bulunamadı")
                     Text("Lütfen sample_screen.json dosyasını kontrol edin", 
                         style = MaterialTheme.typography.bodySmall)
                 }
             }
             else -> {
-                ScreenRenderer(
+                MobileScreenRenderer(
                     components = components,
                     onComponentStateChanged = { updatedComponent ->
                         components = components.map { 
                             if (it.id == updatedComponent.id) updatedComponent else it 
                         }
-                        // State değişikliğini kaydet
                         scope.launch {
                             try {
                                 screenService.saveScreen("current_screen", components)

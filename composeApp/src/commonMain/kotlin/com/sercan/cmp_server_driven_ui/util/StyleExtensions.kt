@@ -1,7 +1,11 @@
 package com.sercan.cmp_server_driven_ui.util
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,10 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sercan.cmp_server_driven_ui.model.ComponentStyle
-import com.sercan.cmp_server_driven_ui.model.Position
-import com.sercan.cmp_server_driven_ui.model.WidthSize
-import com.sercan.cmp_server_driven_ui.model.HorizontalAlignment
+import com.sercan.cmp_server_driven_ui.components.enums.HorizontalAlignment
+import com.sercan.cmp_server_driven_ui.components.enums.WidthSize
+import com.sercan.cmp_server_driven_ui.components.models.ComponentStyle
+import com.sercan.cmp_server_driven_ui.components.models.Position
 
 @Composable
 fun Position.toModifier(): Modifier {

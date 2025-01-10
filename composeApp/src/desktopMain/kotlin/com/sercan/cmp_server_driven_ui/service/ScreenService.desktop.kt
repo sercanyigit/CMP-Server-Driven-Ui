@@ -1,7 +1,6 @@
 package com.sercan.cmp_server_driven_ui.service
 
-import com.sercan.cmp_server_driven_ui.model.*
-import kotlinx.serialization.decodeFromString
+import com.sercan.cmp_server_driven_ui.components.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -17,7 +16,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -36,17 +34,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.model.ButtonComponent
-import com.sercan.cmp_server_driven_ui.model.CheckboxComponent
-import com.sercan.cmp_server_driven_ui.model.DropdownComponent
-import com.sercan.cmp_server_driven_ui.model.HorizontalAlignment
-import com.sercan.cmp_server_driven_ui.model.Position
-import com.sercan.cmp_server_driven_ui.model.RadioButtonComponent
-import com.sercan.cmp_server_driven_ui.model.SwitchComponent
-import com.sercan.cmp_server_driven_ui.model.TextComponent
-import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
-import com.sercan.cmp_server_driven_ui.model.UiComponent
-import com.sercan.cmp_server_driven_ui.model.WidthSize
+import com.sercan.cmp_server_driven_ui.components.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.CheckboxComponent
+import com.sercan.cmp_server_driven_ui.components.DropdownComponent
+import com.sercan.cmp_server_driven_ui.components.RadioButtonComponent
+import com.sercan.cmp_server_driven_ui.components.SwitchComponent
+import com.sercan.cmp_server_driven_ui.components.TextComponent
+import com.sercan.cmp_server_driven_ui.components.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.UiComponent
 
 @Composable
 fun PropertiesPanel(

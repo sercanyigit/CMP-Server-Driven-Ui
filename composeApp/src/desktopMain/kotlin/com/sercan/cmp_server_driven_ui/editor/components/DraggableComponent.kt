@@ -37,11 +37,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.model.Position
-import com.sercan.cmp_server_driven_ui.model.UiComponent
-import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
-import com.sercan.cmp_server_driven_ui.model.TextComponent
-import com.sercan.cmp_server_driven_ui.renderer.ComponentRenderer
+import com.sercan.cmp_server_driven_ui.components.TextComponent
+import com.sercan.cmp_server_driven_ui.components.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.UiComponent
+import com.sercan.cmp_server_driven_ui.components.models.Position
+import com.sercan.cmp_server_driven_ui.renderer.DesktopPanelComponentRenderer
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 
@@ -123,7 +123,7 @@ fun DraggableComponent(
                 )
             }
             else -> {
-                ComponentRenderer(
+                DesktopPanelComponentRenderer(
                     component,
                     onStateChanged = {}
                 )

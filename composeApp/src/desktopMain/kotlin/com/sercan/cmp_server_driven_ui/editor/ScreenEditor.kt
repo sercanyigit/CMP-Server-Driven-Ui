@@ -36,14 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.editor.ComponentFactory.createComponent
 import com.sercan.cmp_server_driven_ui.editor.components.PropertiesPanel
 import com.sercan.cmp_server_driven_ui.editor.components.SearchLeftPanel
-import com.sercan.cmp_server_driven_ui.model.ButtonComponent
-import com.sercan.cmp_server_driven_ui.model.CheckboxComponent
-import com.sercan.cmp_server_driven_ui.model.DropdownComponent
-import com.sercan.cmp_server_driven_ui.model.RadioButtonComponent
-import com.sercan.cmp_server_driven_ui.model.SwitchComponent
-import com.sercan.cmp_server_driven_ui.model.TextComponent
-import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
-import com.sercan.cmp_server_driven_ui.model.UiComponent
+import com.sercan.cmp_server_driven_ui.components.UiComponent
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
 import kotlinx.coroutines.launch
 

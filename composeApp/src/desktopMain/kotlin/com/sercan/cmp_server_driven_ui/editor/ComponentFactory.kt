@@ -1,6 +1,10 @@
 package com.sercan.cmp_server_driven_ui.editor
 
-import com.sercan.cmp_server_driven_ui.model.*
+import com.sercan.cmp_server_driven_ui.components.*
+import com.sercan.cmp_server_driven_ui.components.enums.ComponentType
+import com.sercan.cmp_server_driven_ui.components.enums.HorizontalAlignment
+import com.sercan.cmp_server_driven_ui.components.enums.WidthSize
+import com.sercan.cmp_server_driven_ui.components.models.Position
 import java.util.UUID
 
 object ComponentFactory {
