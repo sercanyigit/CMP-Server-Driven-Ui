@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.renderer
+package com.sercan.cmp_server_driven_ui.components.mobil.rendercomponents
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 import com.sercan.cmp_server_driven_ui.util.toModifier
 

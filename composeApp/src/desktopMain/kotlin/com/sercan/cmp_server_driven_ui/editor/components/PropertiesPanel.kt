@@ -34,14 +34,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.ButtonComponent
-import com.sercan.cmp_server_driven_ui.components.CheckboxComponent
-import com.sercan.cmp_server_driven_ui.components.DropdownComponent
-import com.sercan.cmp_server_driven_ui.components.RadioButtonComponent
-import com.sercan.cmp_server_driven_ui.components.SwitchComponent
-import com.sercan.cmp_server_driven_ui.components.TextComponent
-import com.sercan.cmp_server_driven_ui.components.TextFieldComponent
-import com.sercan.cmp_server_driven_ui.components.UiComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.CheckboxComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.DropdownComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.RadioButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.SwitchComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 
 @Composable
 fun PropertiesPanel(

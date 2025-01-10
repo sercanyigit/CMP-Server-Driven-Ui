@@ -23,7 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.enums.ComponentType
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.ComponentType
 
 @Composable
 fun SearchLeftPanel(

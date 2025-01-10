@@ -1,8 +1,6 @@
-package com.sercan.cmp_server_driven_ui.components
+package com.sercan.cmp_server_driven_ui.components.mobil.models
 
-import com.sercan.cmp_server_driven_ui.components.enums.ComponentType
-import com.sercan.cmp_server_driven_ui.components.models.ComponentStyle
-import com.sercan.cmp_server_driven_ui.components.models.Position
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.ComponentType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

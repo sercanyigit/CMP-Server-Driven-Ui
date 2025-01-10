@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.editor.ComponentFactory.createComponent
 import com.sercan.cmp_server_driven_ui.editor.components.PropertiesPanel
 import com.sercan.cmp_server_driven_ui.editor.components.SearchLeftPanel
-import com.sercan.cmp_server_driven_ui.components.UiComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
 import kotlinx.coroutines.launch
 

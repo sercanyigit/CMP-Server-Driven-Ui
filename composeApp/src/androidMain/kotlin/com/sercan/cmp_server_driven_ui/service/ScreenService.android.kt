@@ -1,7 +1,10 @@
 package com.sercan.cmp_server_driven_ui.service
 
 import android.content.Context
-import com.sercan.cmp_server_driven_ui.components.*
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule

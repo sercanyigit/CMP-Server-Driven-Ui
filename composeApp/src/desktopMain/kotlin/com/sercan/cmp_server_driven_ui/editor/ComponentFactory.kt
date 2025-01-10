@@ -1,10 +1,17 @@
 package com.sercan.cmp_server_driven_ui.editor
 
-import com.sercan.cmp_server_driven_ui.components.*
-import com.sercan.cmp_server_driven_ui.components.enums.ComponentType
-import com.sercan.cmp_server_driven_ui.components.enums.HorizontalAlignment
-import com.sercan.cmp_server_driven_ui.components.enums.WidthSize
-import com.sercan.cmp_server_driven_ui.components.models.Position
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.ComponentType
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.HorizontalAlignment
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.WidthSize
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.CheckboxComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.DropdownComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
+import com.sercan.cmp_server_driven_ui.components.mobil.models.RadioButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.SwitchComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import java.util.UUID
 
 object ComponentFactory {

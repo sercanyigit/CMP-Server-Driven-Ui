@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.renderer
+package com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,35 +10,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sercan.cmp_server_driven_ui.components.SwitchComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.SwitchComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
-import com.sercan.cmp_server_driven_ui.util.toModifier
 
 @Composable
-fun SwitchComponentRender(component: SwitchComponent, onComponentStateChanged: (SwitchComponent) -> Unit) {
+fun DesktopSwitchComponentRender(
+    component: SwitchComponent,
+    onStateChanged: (SwitchComponent) -> Unit
+) {
     Row(
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = component.position.toModifier().then(
-            component.style?.toModifier() ?: Modifier
-        ).fillMaxWidth()
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             component.label,
-            style = MaterialTheme.typography.bodyLarge.copy(
+            style = MaterialTheme.typography.bodyMedium.copy(
                 color = ColorUtil.TextPrimary
             )
         )
         Switch(
             checked = component.isChecked,
-            onCheckedChange = {
-                onComponentStateChanged(component.copy(isChecked = it))
+            onCheckedChange = { checked ->
+                onStateChanged(component.copy(isChecked = checked))
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = ColorUtil.Background,
                 checkedTrackColor = ColorUtil.Primary,
                 uncheckedThumbColor = ColorUtil.Background,
-                uncheckedTrackColor = ColorUtil.Disabled
+                uncheckedTrackColor = ColorUtil.Border
             )
         )
     }

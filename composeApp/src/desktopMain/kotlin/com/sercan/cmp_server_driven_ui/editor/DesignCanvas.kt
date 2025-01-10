@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.UiComponent
-import com.sercan.cmp_server_driven_ui.components.models.Position
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
 import com.sercan.cmp_server_driven_ui.editor.components.DraggableComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 

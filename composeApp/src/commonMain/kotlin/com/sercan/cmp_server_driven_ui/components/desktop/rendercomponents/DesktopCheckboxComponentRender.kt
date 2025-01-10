@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.renderer
+package com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,22 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.CheckboxComponent
-import com.sercan.cmp_server_driven_ui.components.UiComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.CheckboxComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
-import com.sercan.cmp_server_driven_ui.util.toModifier
 
 @Composable
-fun CheckboxComponentRender(
+fun DesktopCheckboxComponentRender(
     component: CheckboxComponent,
-    onComponentStateChanged: (UiComponent) -> Unit
+    onStateChanged: (CheckboxComponent) -> Unit
 ) {
     Row(
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = component.position.toModifier().then(
-            component.style?.toModifier() ?: Modifier
-        ).fillMaxWidth()
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         component.options.forEach { option ->
             Row(
@@ -35,18 +31,17 @@ fun CheckboxComponentRender(
             ) {
                 Checkbox(
                     checked = option in component.selectedOptions,
-                    onCheckedChange = { isChecked ->
-                        val updatedSelection = if (isChecked) {
+                    onCheckedChange = { checked ->
+                        val updatedSelection = if (checked) {
                             component.selectedOptions + option
                         } else {
                             component.selectedOptions - option
                         }
-                        onComponentStateChanged(component.copy(selectedOptions = updatedSelection))
+                        onStateChanged(component.copy(selectedOptions = updatedSelection))
                     },
                     colors = CheckboxDefaults.colors(
                         checkedColor = ColorUtil.Primary,
-                        uncheckedColor = ColorUtil.TextSecondary,
-                        checkmarkColor = ColorUtil.Background
+                        uncheckedColor = ColorUtil.TextSecondary
                     )
                 )
                 Text(

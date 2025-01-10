@@ -1,10 +1,10 @@
-package com.sercan.cmp_server_driven_ui.renderer
+package com.sercan.cmp_server_driven_ui.components.mobil.rendercomponents
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.sercan.cmp_server_driven_ui.components.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 import com.sercan.cmp_server_driven_ui.util.toModifier
 

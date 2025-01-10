@@ -37,11 +37,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.TextComponent
-import com.sercan.cmp_server_driven_ui.components.TextFieldComponent
-import com.sercan.cmp_server_driven_ui.components.UiComponent
-import com.sercan.cmp_server_driven_ui.components.models.Position
-import com.sercan.cmp_server_driven_ui.renderer.DesktopPanelComponentRenderer
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
+import com.sercan.cmp_server_driven_ui.components.desktop.DesktopPanelComponentRenderer
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 

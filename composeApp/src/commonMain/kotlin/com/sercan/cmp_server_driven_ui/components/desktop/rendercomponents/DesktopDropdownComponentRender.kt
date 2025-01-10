@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.renderer
+package com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -29,19 +29,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.components.DropdownComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.DropdownComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
-import com.sercan.cmp_server_driven_ui.util.toModifier
 
 @Composable
-fun DropdownComponentRender(
+fun DesktopDropdownComponentRender(
     component: DropdownComponent,
-    onComponentStateChanged: (DropdownComponent) -> Unit
+    onStateChanged: (DropdownComponent) -> Unit
 ) {
     Column(
-        modifier = component.position.toModifier().then(
-            component.style?.toModifier() ?: Modifier
-        ).fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
@@ -100,7 +97,7 @@ fun DropdownComponentRender(
                                     onClick = {
                                         selectedItem = option
                                         expanded = false
-                                        onComponentStateChanged(component.copy(selectedOption = option))
+                                        onStateChanged(component.copy(selectedOption = option))
                                     },
                                     colors = RadioButtonDefaults.colors(
                                         selectedColor = ColorUtil.Primary,
@@ -118,7 +115,7 @@ fun DropdownComponentRender(
                         onClick = {
                             selectedItem = option
                             expanded = false
-                            onComponentStateChanged(component.copy(selectedOption = option))
+                            onStateChanged(component.copy(selectedOption = option))
                         },
                         modifier = Modifier
                             .fillMaxWidth()

@@ -1,6 +1,9 @@
 package com.sercan.cmp_server_driven_ui.service
 
-import com.sercan.cmp_server_driven_ui.components.*
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

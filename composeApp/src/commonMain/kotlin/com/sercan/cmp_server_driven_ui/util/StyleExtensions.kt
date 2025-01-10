@@ -14,10 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sercan.cmp_server_driven_ui.components.enums.HorizontalAlignment
-import com.sercan.cmp_server_driven_ui.components.enums.WidthSize
-import com.sercan.cmp_server_driven_ui.components.models.ComponentStyle
-import com.sercan.cmp_server_driven_ui.components.models.Position
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.HorizontalAlignment
+import com.sercan.cmp_server_driven_ui.components.mobil.enums.WidthSize
+import com.sercan.cmp_server_driven_ui.components.mobil.models.ComponentStyle
+import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
 
 @Composable
 fun Position.toModifier(): Modifier {
