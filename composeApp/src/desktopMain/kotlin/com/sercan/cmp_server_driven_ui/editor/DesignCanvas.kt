@@ -16,10 +16,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.editor.components.DraggableComponent
 import com.sercan.cmp_server_driven_ui.model.Position
 import com.sercan.cmp_server_driven_ui.model.UiComponent
+import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 @Composable
 fun DesignCanvas(
@@ -32,7 +34,7 @@ fun DesignCanvas(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(Color(0xFFF5F5F5))
             .padding(32.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -41,10 +43,10 @@ fun DesignCanvas(
             modifier = Modifier
                 .width(360.dp) // Standart Android telefon genişliği
                 .height(640.dp) // ~16:9 aspect ratio
-                .background(MaterialTheme.colorScheme.surface)
+                .background(ColorUtil.Background)
                 .border(
                     width = 16.dp,
-                    color = MaterialTheme.colorScheme.outline,
+                    color = Color(0xFFE0E0E0),
                     shape = RoundedCornerShape(32.dp)
                 )
         ) {
@@ -53,43 +55,16 @@ fun DesignCanvas(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                var currentRow = mutableListOf<UiComponent>()
                 components.forEach { component ->
-                        // Yeni satıra geç
-                        Column (
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            currentRow.forEach { rowComponent ->
-                                DraggableComponent(
-                                    component = rowComponent,
-                                    isSelected = rowComponent == selectedComponent,
-                                    onSelected = { onComponentSelected(rowComponent) },
-                                    onMoved = { newPosition -> onComponentMoved(rowComponent, newPosition) },
-                                    onDelete = { onComponentDeleted(rowComponent) }
-                                )
-                            }
-                        }
-                        currentRow = mutableListOf(component)
-                }
-                // Son satırı ekle
-                if (currentRow.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        currentRow.forEach { rowComponent ->
-                            DraggableComponent(
-                                component = rowComponent,
-                                isSelected = rowComponent == selectedComponent,
-                                onSelected = { onComponentSelected(rowComponent) },
-                                onMoved = { newPosition -> onComponentMoved(rowComponent, newPosition) },
-                                onDelete = { onComponentDeleted(rowComponent) }
-                            )
-                        }
-                    }
+                    DraggableComponent(
+                        component = component,
+                        isSelected = component == selectedComponent,
+                        onSelected = { onComponentSelected(component) },
+                        onMoved = { newPosition -> onComponentMoved(component, newPosition) },
+                        onDelete = { onComponentDeleted(component) }
+                    )
                 }
             }
         }

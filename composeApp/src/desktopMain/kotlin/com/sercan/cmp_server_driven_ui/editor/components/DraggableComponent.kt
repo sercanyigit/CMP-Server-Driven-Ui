@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
@@ -23,8 +24,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +42,7 @@ import com.sercan.cmp_server_driven_ui.model.UiComponent
 import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.model.TextComponent
 import com.sercan.cmp_server_driven_ui.renderer.ComponentRenderer
+import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,33 +60,66 @@ fun DraggableComponent(
     Box(
         modifier = Modifier
             .width(component.position.width.dp)
-            .height(component.position.height.dp)
+            .height(
+                when (component) {
+                    is TextComponent, is TextFieldComponent -> component.position.height.dp + 30.dp
+                    else -> component.position.height.dp
+                }
+            )
             .border(
                 width = if (isSelected) 2.dp else 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.outline
+                color = if (isSelected) ColorUtil.Primary else ColorUtil.Border,
+                shape = RoundedCornerShape(8.dp)
             )
             .clickable { onSelected() }
+            .padding(8.dp)
     ) {
         when (component) {
             is TextFieldComponent -> {
-                TextField(
-                    value = component.value,
+                OutlinedTextField(
+                    value = component.value ?: "",
                     onValueChange = { },
                     readOnly = true,
                     enabled = false,
-                    label = { Text(component.label ?: "") },
-                    placeholder = { Text(component.hint) },
-                    modifier = Modifier.fillMaxWidth()
+                    label = { 
+                        Text(
+                            component.label ?: "",
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = ColorUtil.TextSecondary
+                            )
+                        ) 
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ColorUtil.Primary,
+                        unfocusedBorderColor = ColorUtil.Border,
+                        focusedLabelColor = ColorUtil.Primary,
+                        unfocusedLabelColor = ColorUtil.TextSecondary,
+                        cursorColor = ColorUtil.Primary
+                    ),
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(
+                        color = ColorUtil.TextPrimary
+                    )
                 )
             }
             is TextComponent -> {
-                TextField(
+                OutlinedTextField(
                     value = component.text,
                     onValueChange = { },
                     readOnly = true,
                     enabled = false,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ColorUtil.Primary,
+                        unfocusedBorderColor = ColorUtil.Border,
+                        disabledBorderColor = ColorUtil.Border,
+                        disabledTextColor = ColorUtil.TextPrimary
+                    ),
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(
+                        color = ColorUtil.TextPrimary
+                    )
                 )
             }
             else -> {
@@ -104,7 +140,7 @@ fun DraggableComponent(
             Icon(
                 Icons.Default.Delete,
                 contentDescription = "Sil",
-                tint = MaterialTheme.colorScheme.error
+                tint = ColorUtil.Primary
             )
         }
     }
@@ -124,7 +160,7 @@ fun DraggableComponent(
                 Icon(
                     Icons.Default.Warning,
                     contentDescription = "Uyarı",
-                    tint = MaterialTheme.colorScheme.error,
+                    tint = ColorUtil.Primary,
                     modifier = Modifier.size(48.dp)
                 )
 
@@ -132,7 +168,9 @@ fun DraggableComponent(
 
                 Text(
                     "Bu bileşeni silmek istediğinizden emin misiniz?",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = ColorUtil.TextPrimary
+                    ),
                     textAlign = TextAlign.Center
                 )
 
@@ -140,10 +178,14 @@ fun DraggableComponent(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     OutlinedButton(
-                        onClick = { showDeleteConfirmation = false }
+                        onClick = { showDeleteConfirmation = false },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = ColorUtil.Primary
+                        )
                     ) {
                         Text("İptal")
                     }
@@ -153,13 +195,17 @@ fun DraggableComponent(
                             onDelete()
                             showDeleteConfirmation = false
                         },
+                        modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error
+                            containerColor = ColorUtil.Primary,
+                            contentColor = ColorUtil.Background
                         )
                     ) {
                         Text("Evet, Sil")
                     }
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }

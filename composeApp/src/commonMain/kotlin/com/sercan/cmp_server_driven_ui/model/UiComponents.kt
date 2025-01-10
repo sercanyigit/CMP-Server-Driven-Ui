@@ -41,7 +41,7 @@ data class Position(
     val x: Int,
     val y: Int,
     val width: Int = 100,
-    val height: Int = 40,
+    val height: Int = 60,
     val widthSize: WidthSize = WidthSize.FIXED,
     val alignment: HorizontalAlignment = HorizontalAlignment.START
 )

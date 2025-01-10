@@ -1,101 +1,120 @@
 [
     {
         "type": "TEXT",
-        "id": "text_020065a0-e83",
+        "id": "text_78095dc4-7e2",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 60,
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "text": "Metin"
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_c11a78d7-47f",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 60,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "text": "Buton"
+        "text": "baslık"
     },
     {
         "type": "TEXT_FIELD",
-        "id": "textfield_aaf7843c-014",
+        "id": "textfield_9c2b05f1-13a",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 60,
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "hint": "Hint",
-        "label": "Label"
+        "hint": "AD",
+        "label": "Ad",
+        "value": ""
     },
     {
-        "type": "CHECKBOX",
-        "id": "checkbox_fd319b99-b89",
+        "type": "TEXT_FIELD",
+        "id": "textfield_47238fda-bd9",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "hint": "SOYADI",
+        "label": "Soyadı",
+        "value": ""
+    },
+    {
+        "type": "CHECKBOX",
+        "id": "checkbox_641e4bb7-7a6",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
         "options": [
-            "hhgg",
-            "ıuyy"
+            "1",
+            "2"
+        ],
+        "selectedOptions": [
+            "1",
+            "2"
         ]
     },
     {
         "type": "RADIO_BUTTON",
-        "id": "radiobutton_2a8fc132-0c7",
+        "id": "radiobutton_039a352c-720",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 60,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        }
-    },
-    {
-        "type": "DROPDOWN",
-        "id": "dropdown_d03854e8-309",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "height": 60,
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "label": "Dropdown",
         "options": [
-            "Seçenek 1",
-            "Seçenek 2",
-            "Seçenek 3"
+            "2",
+            "3"
+        ],
+        "selectedOption": "3"
+    },
+    {
+        "type": "DROPDOWN",
+        "id": "dropdown_b6b5f469-269",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "label": "Liste",
+        "options": [
+            "1",
+            "2",
+            "3",
+            "4"
         ]
     },
     {
         "type": "SWITCH",
-        "id": "switch_21f9e99f-60c",
+        "id": "switch_35c1f119-125",
         "position": {
             "x": 0,
             "y": 0,
             "width": 328,
-            "height": 60,
             "widthSize": "FULL",
             "alignment": "CENTER"
         },
-        "label": "Switch"
+        "label": "Anahtar",
+        "isChecked": true
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_c4548620-f8a",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "text": "GÖNDER"
     }
 ]
