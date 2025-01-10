@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.editor.components
+package com.sercan.cmp_server_driven_ui.editor.screendesign
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,8 +24,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -37,11 +35,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.sercan.cmp_server_driven_ui.components.desktop.DesktopScreenRenderer
+import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
 import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
-import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
-import com.sercan.cmp_server_driven_ui.components.desktop.DesktopPanelComponentRenderer
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 
@@ -74,61 +72,11 @@ fun DraggableComponent(
             .clickable { onSelected() }
             .padding(8.dp)
     ) {
-        when (component) {
-            is TextFieldComponent -> {
-                OutlinedTextField(
-                    value = component.value ?: "",
-                    onValueChange = { },
-                    readOnly = true,
-                    enabled = false,
-                    label = { 
-                        Text(
-                            component.label ?: "",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = ColorUtil.TextSecondary
-                            )
-                        ) 
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = ColorUtil.Primary,
-                        unfocusedBorderColor = ColorUtil.Border,
-                        focusedLabelColor = ColorUtil.Primary,
-                        unfocusedLabelColor = ColorUtil.TextSecondary,
-                        cursorColor = ColorUtil.Primary
-                    ),
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(
-                        color = ColorUtil.TextPrimary
-                    )
-                )
-            }
-            is TextComponent -> {
-                OutlinedTextField(
-                    value = component.text,
-                    onValueChange = { },
-                    readOnly = true,
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = ColorUtil.Primary,
-                        unfocusedBorderColor = ColorUtil.Border,
-                        disabledBorderColor = ColorUtil.Border,
-                        disabledTextColor = ColorUtil.TextPrimary
-                    ),
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(
-                        color = ColorUtil.TextPrimary
-                    )
-                )
-            }
-            else -> {
-                DesktopPanelComponentRenderer(
-                    component,
-                    onStateChanged = {}
-                )
-            }
-        }
+        // Tüm componentler render edilecek
+        DesktopScreenRenderer(
+            component,
+            onStateChanged = {}
+        )
 
         // Silme ikonu
         IconButton(
@@ -140,7 +88,7 @@ fun DraggableComponent(
             Icon(
                 Icons.Default.Delete,
                 contentDescription = "Sil",
-                tint = ColorUtil.Primary
+                tint = ColorUtil.Secondary
             )
         }
     }

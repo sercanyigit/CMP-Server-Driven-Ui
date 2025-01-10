@@ -6,15 +6,19 @@ import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.Deskt
 import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.DesktopDropdownComponentRender
 import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.DesktopRadioButtonComponentRender
 import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.DesktopSwitchComponentRender
+import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.DesktopTextComponentRenderer
+import com.sercan.cmp_server_driven_ui.components.desktop.rendercomponents.DesktopTextFieldComponentRender
 import com.sercan.cmp_server_driven_ui.components.mobil.models.ButtonComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.CheckboxComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.DropdownComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.RadioButtonComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.SwitchComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextComponent
+import com.sercan.cmp_server_driven_ui.components.mobil.models.TextFieldComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 
 @Composable
-fun DesktopPanelComponentRenderer(
+fun DesktopScreenRenderer(
     component: UiComponent,
     onStateChanged: (UiComponent) -> Unit
 ) {
@@ -34,6 +38,11 @@ fun DesktopPanelComponentRenderer(
         is DropdownComponent -> {
             DesktopDropdownComponentRender(component, onStateChanged)
         }
-        else -> {}
+        is TextComponent -> {
+            DesktopTextComponentRenderer(component)
+        }
+        is TextFieldComponent -> {
+            DesktopTextFieldComponentRender(component)
+        }
     }
 }

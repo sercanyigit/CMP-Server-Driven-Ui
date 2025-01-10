@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.editor.components
+package com.sercan.cmp_server_driven_ui.editor.searchcomponents
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import com.sercan.cmp_server_driven_ui.components.mobil.enums.ComponentType
 
 
 @Composable
-fun ComponentItem(
+fun SearchComponentList(
     componentType: ComponentType,
     onClick: () -> Unit
 ) {
@@ -47,12 +47,12 @@ fun ComponentItem(
             Icon(
                 imageVector = when (componentType) {
                     ComponentType.TEXT -> Icons.Default.Label
-                    ComponentType.BUTTON -> Icons.Default.SmartButton
                     ComponentType.TEXT_FIELD -> Icons.Default.TextFields
                     ComponentType.CHECKBOX -> Icons.Default.CheckBox
                     ComponentType.RADIO_BUTTON -> Icons.Default.RadioButtonChecked
                     ComponentType.DROPDOWN -> Icons.Default.ArrowDropDown
                     ComponentType.SWITCH -> Icons.Default.SwitchRight
+                    ComponentType.BUTTON -> Icons.Default.SmartButton
                 },
                 contentDescription = componentType.name,
                 tint = MaterialTheme.colorScheme.primary
@@ -60,12 +60,12 @@ fun ComponentItem(
             Text(
                 text = when (componentType) {
                     ComponentType.TEXT -> "Label"
-                    ComponentType.BUTTON -> "Buton"
                     ComponentType.TEXT_FIELD -> "Text Field"
                     ComponentType.CHECKBOX -> "Checkbox"
                     ComponentType.RADIO_BUTTON -> "Radio buton"
                     ComponentType.DROPDOWN -> "Liste"
                     ComponentType.SWITCH -> "Switch"
+                    ComponentType.BUTTON -> "Buton"
                 },
                 style = MaterialTheme.typography.bodyLarge
             )

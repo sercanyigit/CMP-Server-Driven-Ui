@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.editor
+package com.sercan.cmp_server_driven_ui.editor.screendesign
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.components.mobil.models.UiComponent
 import com.sercan.cmp_server_driven_ui.components.mobil.models.Position
-import com.sercan.cmp_server_driven_ui.editor.components.DraggableComponent
 import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 @Composable

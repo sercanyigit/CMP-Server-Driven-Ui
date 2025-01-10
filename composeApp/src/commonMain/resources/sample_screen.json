@@ -1,120 +1,62 @@
 [
     {
         "type": "TEXT",
-        "id": "text_78095dc4-7e2",
+        "id": "text_bfa797b2-bb2",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
+            "width": 328
         },
-        "text": "baslık"
+        "text": "Metin"
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_4e6eb1de-24c",
+        "position": {
+            "width": 328
+        },
+        "text": "Buton"
     },
     {
         "type": "TEXT_FIELD",
-        "id": "textfield_9c2b05f1-13a",
+        "id": "textfield_f5b2b48d-c19",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
+            "width": 328
         },
-        "hint": "AD",
-        "label": "Ad",
-        "value": ""
-    },
-    {
-        "type": "TEXT_FIELD",
-        "id": "textfield_47238fda-bd9",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "hint": "SOYADI",
-        "label": "Soyadı",
-        "value": ""
+        "hint": "Hint",
+        "label": "Label"
     },
     {
         "type": "CHECKBOX",
-        "id": "checkbox_641e4bb7-7a6",
+        "id": "checkbox_9fdda3e9-5b1",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "options": [
-            "1",
-            "2"
-        ],
-        "selectedOptions": [
-            "1",
-            "2"
-        ]
+            "width": 328
+        }
     },
     {
         "type": "RADIO_BUTTON",
-        "id": "radiobutton_039a352c-720",
+        "id": "radiobutton_bbecc2f4-0e3",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "options": [
-            "2",
-            "3"
-        ],
-        "selectedOption": "3"
+            "width": 328
+        }
     },
     {
         "type": "DROPDOWN",
-        "id": "dropdown_b6b5f469-269",
+        "id": "dropdown_365fb5b3-d7e",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
+            "width": 328
         },
-        "label": "Liste",
+        "label": "Dropdown",
         "options": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "Seçenek 1",
+            "Seçenek 2",
+            "Seçenek 3"
         ]
     },
     {
         "type": "SWITCH",
-        "id": "switch_35c1f119-125",
+        "id": "switch_22c3df40-f42",
         "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
+            "width": 328
         },
-        "label": "Anahtar",
-        "isChecked": true
-    },
-    {
-        "type": "BUTTON",
-        "id": "button_c4548620-f8a",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "width": 328,
-            "widthSize": "FULL",
-            "alignment": "CENTER"
-        },
-        "text": "GÖNDER"
+        "label": "Switch"
     }
 ]

@@ -1,4 +1,4 @@
-package com.sercan.cmp_server_driven_ui.editor.components
+package com.sercan.cmp_server_driven_ui.editor.searchcomponents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.components.mobil.enums.ComponentType
 
 @Composable
-fun SearchLeftPanel(
+fun SearchComponentsPanel(
     onComponentSelected: (ComponentType) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -38,12 +38,12 @@ fun SearchLeftPanel(
             componentTypes.filter { componentType ->
                 when (componentType) {
                     ComponentType.TEXT -> "Label"
-                    ComponentType.BUTTON -> "Buton"
                     ComponentType.TEXT_FIELD -> "Text Field"
                     ComponentType.CHECKBOX -> "Checkbox"
                     ComponentType.RADIO_BUTTON -> "Radio buton"
                     ComponentType.DROPDOWN -> "Liste"
                     ComponentType.SWITCH -> "Switch"
+                    ComponentType.BUTTON -> "Buton"
                 }.contains(searchQuery, ignoreCase = true)
             }
         }
@@ -72,13 +72,13 @@ fun SearchLeftPanel(
             )
         )
 
-        // Bileşen kategorileri
+        // Component kategorileri
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(filteredComponents) { componentType ->
-                ComponentItem(
+                SearchComponentList(
                     componentType = componentType,
                     onClick = { onComponentSelected(componentType) }
                 )
