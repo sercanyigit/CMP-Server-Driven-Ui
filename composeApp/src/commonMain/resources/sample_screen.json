@@ -1,12 +1,85 @@
 [
     {
-        "type": "TEXT",
-        "id": "text_1",
+        "type": "TEXT_FIELD",
+        "id": "text_field_1",
         "position": {
             "x": 0,
             "y": 0,
-            "width": 328
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
         },
-        "text": "DENEME"
+        "hint": "Adınızı giriniz",
+        "label": "Ad",
+        "value": "Sercan"
+    },
+    {
+        "type": "TEXT_FIELD",
+        "id": "text_field_2",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "hint": "Soyadınızı giriniz",
+        "label": "Soyad",
+        "value": "Yiğit"
+    },
+    {
+        "type": "CHECKBOX",
+        "id": "checkbox_3",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "label": "Ehliyet",
+        "isChecked": true
+    },
+    {
+        "type": "SWITCH",
+        "id": "switch_5",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "label": "Şartları Kabul et"
+    },
+    {
+        "type": "BUTTON",
+        "id": "button_6",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "text": "Tamam"
+    },
+    {
+        "type": "TEXT",
+        "id": "text_0",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "width": 328,
+            "height": 60,
+            "widthSize": "FULL",
+            "alignment": "CENTER"
+        },
+        "text": "Deneme"
     }
 ]

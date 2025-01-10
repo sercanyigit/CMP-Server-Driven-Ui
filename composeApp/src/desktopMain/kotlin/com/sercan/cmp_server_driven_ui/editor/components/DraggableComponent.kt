@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.Position
 import com.sercan.cmp_server_driven_ui.model.UiComponent
+import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.model.TextComponent
 import com.sercan.cmp_server_driven_ui.renderer.ComponentRenderer
 
 
@@ -62,10 +65,34 @@ fun DraggableComponent(
             )
             .clickable { onSelected() }
     ) {
-        ComponentRenderer(
-            component,
-            onStateChanged = {}
-        )
+        when (component) {
+            is TextFieldComponent -> {
+                TextField(
+                    value = component.value,
+                    onValueChange = { },
+                    readOnly = true,
+                    enabled = false,
+                    label = { Text(component.label ?: "") },
+                    placeholder = { Text(component.hint) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            is TextComponent -> {
+                TextField(
+                    value = component.text,
+                    onValueChange = { },
+                    readOnly = true,
+                    enabled = false,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            else -> {
+                ComponentRenderer(
+                    component,
+                    onStateChanged = {}
+                )
+            }
+        }
 
         // Silme ikonu - sadece seçili bileşen için göster
         if (isSelected) {
@@ -109,14 +136,6 @@ fun DraggableComponent(
                     "Bu bileşeni silmek istediğinizden emin misiniz?",
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    "Bu işlem geri alınamaz.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

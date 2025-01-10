@@ -5,67 +5,55 @@ import com.sercan.cmp_server_driven_ui.model.*
 object ComponentFactory {
     fun createComponent(type: ComponentType, index: Int): UiComponent {
         val id = "${type.name.lowercase()}_$index"
-        val position = Position(
+        val defaultPosition = Position(
             x = 0,
             y = 0,
-            width = when(type) {
-                ComponentType.TEXT -> 328
-                ComponentType.BUTTON -> 160
-                ComponentType.TEXT_FIELD -> 328
-                ComponentType.CHECKBOX -> 160
-                ComponentType.RADIO_BUTTON -> 160
-                ComponentType.DROPDOWN -> 328
-                ComponentType.SWITCH -> 160
-            },
-            height = when(type) {
-                ComponentType.TEXT -> 40
-                ComponentType.BUTTON -> 48
-                ComponentType.TEXT_FIELD -> 56
-                ComponentType.CHECKBOX -> 40
-                ComponentType.RADIO_BUTTON -> 40
-                ComponentType.DROPDOWN -> 80
-                ComponentType.SWITCH -> 40
-            }
+            width = 328,
+            height = 60,
+            widthSize = WidthSize.FULL,
+            alignment = HorizontalAlignment.CENTER
         )
-        
+
         return when (type) {
             ComponentType.TEXT -> TextComponent(
                 id = id,
-                position = position,
+                position = defaultPosition,
                 text = "Metin"
             )
             ComponentType.BUTTON -> ButtonComponent(
                 id = id,
-                position = position,
+                position = defaultPosition,
                 text = "Buton"
             )
             ComponentType.TEXT_FIELD -> TextFieldComponent(
-                id = id,
-                position = position,
+                id =id,
                 hint = "Hint",
-                label = "Label"
+                label = "Label",
+                value = "Value",
+                position = defaultPosition
             )
             ComponentType.CHECKBOX -> CheckboxComponent(
                 id = id,
-                position = position,
+                position = defaultPosition,
                 label = "Checkbox"
             )
             ComponentType.RADIO_BUTTON -> RadioButtonComponent(
                 id = id,
-                position = position,
+                position = defaultPosition,
                 label = "Radio buton",
                 group = "grup1"
             )
             ComponentType.DROPDOWN -> DropdownComponent(
                 id = id,
-                position = position,
-                label = "Liste",
-                options = listOf("Seçenek 1", "Seçenek 2", "Seçenek 3")
+                label = "Dropdown",
+                options = listOf("Seçenek 1", "Seçenek 2", "Seçenek 3"),
+                position = defaultPosition
             )
             ComponentType.SWITCH -> SwitchComponent(
-                id = id,
-                position = position,
-                label = "Switch"
+                id = "switch_$index",
+                label = "Switch",
+                isChecked = false,
+                position = defaultPosition
             )
         }
     }

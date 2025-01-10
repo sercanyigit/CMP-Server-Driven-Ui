@@ -10,6 +10,18 @@ sealed class UiComponent {
     abstract val type: ComponentType
     abstract val position: Position
     abstract val style: ComponentStyle?
+
+    fun updatePosition(newPosition: Position): UiComponent {
+        return when (this) {
+            is TextComponent -> copy(position = newPosition)
+            is ButtonComponent -> copy(position = newPosition)
+            is TextFieldComponent -> copy(position = newPosition)
+            is CheckboxComponent -> copy(position = newPosition)
+            is RadioButtonComponent -> copy(position = newPosition)
+            is DropdownComponent -> copy(position = newPosition)
+            is SwitchComponent -> copy(position = newPosition)
+        }
+    }
 }
 
 @Serializable
@@ -105,7 +117,8 @@ data class TextFieldComponent(
     override val position: Position,
     override val style: ComponentStyle? = null,
     val hint: String,
-    val label: String? = null
+    val label: String? = null,
+    val value: String = "Value"
 ) : UiComponent()
 
 @Serializable

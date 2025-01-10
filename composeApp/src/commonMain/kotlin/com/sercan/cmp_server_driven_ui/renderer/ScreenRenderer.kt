@@ -27,9 +27,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.MaterialTheme
 import com.sercan.cmp_server_driven_ui.util.getAlignment
 import com.sercan.cmp_server_driven_ui.util.toModifier
 import com.sercan.cmp_server_driven_ui.util.toTextStyle
@@ -73,11 +75,10 @@ fun ScreenRenderer(
                     }
                     is TextFieldComponent -> {
                         TextField(
-                            value = component.hint,
-                            onValueChange = { 
-                                onComponentStateChanged(component.copy(hint = it))
-                            },
+                            value = component.value,
+                            onValueChange = { onComponentStateChanged(component.copy(value = it)) },
                             label = { Text(component.label ?: "") },
+                            placeholder = { Text(component.hint) },
                             modifier = modifier.then(
                                 component.style?.toModifier() ?: Modifier
                             )
@@ -185,12 +186,13 @@ fun ComponentRenderer(
                 Text(component.text)
             }
             is TextFieldComponent -> {
-                var text by remember(component.id) { mutableStateOf(component.hint) }
+                var hint by remember(component.id) { mutableStateOf(component.hint) }
+                var value by remember(component.id) { mutableStateOf(component.value) }
                 TextField(
-                    value = text,
+                    value = value,
                     onValueChange = { newText ->
-                        text = newText
-                        onStateChanged(component.copy(hint = newText))
+                        value = newText
+                        onStateChanged(component.copy(hint = hint, value = value))
                     },
                     label = { Text(component.label ?: "") },
                     placeholder = { Text(component.hint) },

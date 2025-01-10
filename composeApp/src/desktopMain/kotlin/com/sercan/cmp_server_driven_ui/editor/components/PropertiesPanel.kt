@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AlignHorizontalCenter
@@ -24,10 +26,16 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sercan.cmp_server_driven_ui.model.ButtonComponent
@@ -51,163 +59,178 @@ fun PropertiesPanel(
 ) {
     Column(
         modifier = Modifier
-            .width(300.dp)
+            .width(350.dp)
             .fillMaxHeight()
             .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp)
     ) {
-        if (selectedComponent == null) {
-            Text("Hiçbir öğe seçilmedi")
-            return
+        // Başlık ve butonlar için sabit alan
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            if (selectedComponent == null) {
+                Text("Hiçbir öğe seçilmedi")
+                return
+            }
+
+            Text("Özellikler", style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.height(16.dp))
         }
 
-        Text("Özellikler", style = MaterialTheme.typography.titleMedium)
-        Spacer(Modifier.height(16.dp))
+        // Scroll edilebilir içerik
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp)
+        ) {
+            // Genel özellikler
+            TextField(
+                value = selectedComponent?.id ?: "",
+                onValueChange = {},
+                label = { Text("ID") },
+                enabled = false,
+                modifier = Modifier.fillMaxWidth()
+            )
+            
+            Spacer(Modifier.height(8.dp))
 
-        // Genel özellikler
-        TextField(
-            value = selectedComponent.id,
-            onValueChange = {},
-            label = { Text("ID") },
-            enabled = false,
-            modifier = Modifier.fillMaxWidth()
-        )
-        
-        Spacer(Modifier.height(8.dp))
+            // Pozisyon özellikleri
+            Text("Konum", style = MaterialTheme.typography.labelMedium)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                TextField(
+                    value = selectedComponent?.position?.x?.toString() ?: "0",
+                    onValueChange = { str ->
+                        str.toIntOrNull()?.let { x ->
+                            onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                                it.copy(x = x)
+                            })
+                        }
+                    },
+                    label = { Text("X") },
+                    modifier = Modifier.weight(1f)
+                )
+                TextField(
+                    value = selectedComponent?.position?.y?.toString() ?: "0",
+                    onValueChange = { str ->
+                        str.toIntOrNull()?.let { y ->
+                            onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                                it.copy(y = y)
+                            })
+                        }
+                    },
+                    label = { Text("Y") },
+                    modifier = Modifier.weight(1f)
+                )
+            }
 
-        // Pozisyon özellikleri
-        Text("Konum", style = MaterialTheme.typography.labelMedium)
+            Spacer(Modifier.height(16.dp))
+
+            // Genişlik türü seçici
+            WidthSizeSelector(
+                currentSize = selectedComponent?.position?.widthSize ?: WidthSize.FIXED,
+                onSizeSelected = { newSize ->
+                    onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                        it.copy(widthSize = newSize)
+                    })
+                }
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            // Hizalama seçici
+            AlignmentSelector(
+                currentAlignment = selectedComponent?.position?.alignment ?: HorizontalAlignment.START,
+                onAlignmentSelected = { newAlignment ->
+                    onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                        it.copy(alignment = newAlignment)
+                    })
+                }
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            // Boyut özellikleri
+            Text("Boyut", style = MaterialTheme.typography.labelMedium)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                TextField(
+                    value = selectedComponent?.position?.width?.toString() ?: "0",
+                    onValueChange = { str ->
+                        str.toIntOrNull()?.let { width ->
+                            onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                                it.copy(width = width)
+                            })
+                        }
+                    },
+                    label = { Text("Genişlik") },
+                    modifier = Modifier.weight(1f)
+                )
+                TextField(
+                    value = selectedComponent?.position?.height?.toString() ?: "0",
+                    onValueChange = { str ->
+                        str.toIntOrNull()?.let { height ->
+                            onComponentUpdated(updateComponentPosition(selectedComponent!!) {
+                                it.copy(height = height)
+                            })
+                        }
+                    },
+                    label = { Text("Yükseklik") },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+            Divider()
+            Spacer(Modifier.height(16.dp))
+
+            // Bileşene özel özellikler
+            when (selectedComponent) {
+                is TextComponent -> TextComponentProperties(selectedComponent, onComponentUpdated)
+                is ButtonComponent -> ButtonComponentProperties(selectedComponent, onComponentUpdated)
+                is TextFieldComponent -> TextFieldComponentProperties(selectedComponent, onComponentUpdated)
+                is CheckboxComponent -> CheckboxComponentProperties(selectedComponent, onComponentUpdated)
+                is RadioButtonComponent -> RadioButtonComponentProperties(selectedComponent, onComponentUpdated)
+                is DropdownComponent -> DropdownComponentProperties(selectedComponent, onComponentUpdated)
+                is SwitchComponent -> SwitchComponentProperties(selectedComponent, onComponentUpdated)
+                else -> {}
+            }
+        }
+
+        // Alt butonlar için sabit alan
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TextField(
-                value = selectedComponent.position.x.toString(),
-                onValueChange = { str ->
-                    str.toIntOrNull()?.let { x ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) {
-                            it.copy(x = x) 
-                        })
-                    }
-                },
-                label = { Text("X") },
+            OutlinedButton(
+                onClick = onClearRequest,
                 modifier = Modifier.weight(1f)
-            )
-            TextField(
-                value = selectedComponent.position.y.toString(),
-                onValueChange = { str ->
-                    str.toIntOrNull()?.let { y ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) {
-                            it.copy(y = y) 
-                        })
-                    }
-                },
-                label = { Text("Y") },
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Spacer(Modifier.height(16.dp))
-
-        // Genişlik türü seçici
-        WidthSizeSelector(
-            currentSize = selectedComponent.position.widthSize,
-            onSizeSelected = { newSize ->
-                onComponentUpdated(updateComponentPosition(selectedComponent) {
-                    it.copy(widthSize = newSize) 
-                })
+            ) {
+                Icon(
+                    Icons.Default.Delete,
+                    contentDescription = "Temizle",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text("Temizle")
             }
-        )
-
-        Spacer(Modifier.height(16.dp))
-
-        // Hizalama seçici
-        AlignmentSelector(
-            currentAlignment = selectedComponent.position.alignment,
-            onAlignmentSelected = { newAlignment ->
-                onComponentUpdated(updateComponentPosition(selectedComponent) {
-                    it.copy(alignment = newAlignment) 
-                })
+            Button(
+                onClick = onSaveRequest,
+                modifier = Modifier.weight(1f)
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Kaydet",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text("Kaydet")
             }
-        )
-
-        Spacer(Modifier.height(16.dp))
-
-        // Boyut özellikleri
-        Text("Boyut", style = MaterialTheme.typography.labelMedium)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            TextField(
-                value = selectedComponent.position.width.toString(),
-                onValueChange = { str ->
-                    str.toIntOrNull()?.let { width ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) {
-                            it.copy(width = width) 
-                        })
-                    }
-                },
-                label = { Text("Genişlik") },
-                modifier = Modifier.weight(1f)
-            )
-            TextField(
-                value = selectedComponent.position.height.toString(),
-                onValueChange = { str ->
-                    str.toIntOrNull()?.let { height ->
-                        onComponentUpdated(updateComponentPosition(selectedComponent) {
-                            it.copy(height = height) 
-                        })
-                    }
-                },
-                label = { Text("Yükseklik") },
-                modifier = Modifier.weight(1f)
-            )
-        }
-
-        Spacer(Modifier.height(16.dp))
-        Divider()
-        Spacer(Modifier.height(16.dp))
-
-        // Bileşene özel özellikler
-        when (selectedComponent) {
-            is TextComponent -> TextComponentProperties(selectedComponent, onComponentUpdated)
-            is ButtonComponent -> ButtonComponentProperties(selectedComponent, onComponentUpdated)
-            is TextFieldComponent -> TextFieldComponentProperties(selectedComponent, onComponentUpdated)
-            is CheckboxComponent -> CheckboxComponentProperties(selectedComponent, onComponentUpdated)
-            is RadioButtonComponent -> RadioButtonComponentProperties(selectedComponent, onComponentUpdated)
-            is DropdownComponent -> DropdownComponentProperties(selectedComponent, onComponentUpdated)
-            is SwitchComponent -> SwitchComponentProperties(selectedComponent, onComponentUpdated)
-        }
-
-        Spacer(Modifier.weight(1f))
-        
-        // Butonlar
-        Button(
-            onClick = onClearRequest,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.error
-            )
-        ) {
-            Icon(
-                Icons.Default.Delete,
-                contentDescription = "Temizle",
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text("Temizle")
-        }
-
-        Button(
-            onClick = onSaveRequest,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(
-                Icons.Default.Add,
-                contentDescription = "Kaydet",
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text("Kaydet")
         }
     }
 }
@@ -217,14 +240,25 @@ private fun TextComponentProperties(
     component: TextComponent,
     onComponentUpdated: (UiComponent) -> Unit
 ) {
-    TextField(
-        value = component.text,
-        onValueChange = { 
-            onComponentUpdated(component.copy(text = it))
-        },
-        label = { Text("Metin") },
-        modifier = Modifier.fillMaxWidth()
-    )
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        var localText by remember(component.id) { mutableStateOf(component.text) }
+
+        // Text değiştiğinde state'i güncelle
+        LaunchedEffect(component.text) {
+            localText = component.text
+        }
+
+        OutlinedTextField(
+            value = localText,
+            onValueChange = { newText -> 
+                localText = newText
+                onComponentUpdated(component.copy(text = newText))
+            },
+            label = { Text("Text") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+    }
 }
 
 @Composable
@@ -247,25 +281,47 @@ private fun TextFieldComponentProperties(
     component: TextFieldComponent,
     onComponentUpdated: (UiComponent) -> Unit
 ) {
-    Column {
-        TextField(
-            value = component.hint,
-            onValueChange = { 
-                onComponentUpdated(component.copy(hint = it))
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        var localValue by remember(component.id) { mutableStateOf(component.value) }
+        var localHint by remember(component.id) { mutableStateOf(component.hint) }
+        var localLabel by remember(component.id) { mutableStateOf(component.label ?: "") }
+
+        // Value değiştiğinde state'i güncelle
+        LaunchedEffect(component.value) {
+            localValue = component.value
+        }
+
+        OutlinedTextField(
+            value = localValue,
+            onValueChange = { newValue -> 
+                localValue = newValue
+                onComponentUpdated(component.copy(value = newValue))
             },
-            label = { Text("TextField") },
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Value") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
         
-        Spacer(Modifier.height(8.dp))
+        OutlinedTextField(
+            value = localHint,
+            onValueChange = { newHint -> 
+                localHint = newHint
+                onComponentUpdated(component.copy(hint = newHint))
+            },
+            label = { Text("Hint") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
         
-        TextField(
-            value = component.label ?: "",
-            onValueChange = { 
-                onComponentUpdated(component.copy(label = it))
+        OutlinedTextField(
+            value = localLabel,
+            onValueChange = { newLabel -> 
+                localLabel = newLabel
+                onComponentUpdated(component.copy(label = newLabel))
             },
             label = { Text("Label") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
     }
 }

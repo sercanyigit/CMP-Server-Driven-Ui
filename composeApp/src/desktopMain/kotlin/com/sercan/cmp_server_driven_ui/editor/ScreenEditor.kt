@@ -1,6 +1,5 @@
 package com.sercan.cmp_server_driven_ui.editor
 
-// ComponentPanel ve ComponentFactory'yi aynı pakette olduğu için direkt import ediyoruz
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,7 +83,7 @@ fun ScreenEditor(
             )
 
             // Orta panel - Tasarım alanı
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
@@ -94,23 +93,14 @@ fun ScreenEditor(
                     selectedComponent = selectedComponent,
                     onComponentSelected = { selectedComponent = it },
                     onComponentMoved = { component, newPosition ->
-                        components = components.map {
-                            if (it.id == component.id) {
-                                when (it) {
-                                    is TextComponent -> it.copy(position = newPosition)
-                                    is ButtonComponent -> it.copy(position = newPosition)
-                                    is TextFieldComponent -> it.copy(position = newPosition)
-                                    is CheckboxComponent -> it.copy(position = newPosition)
-                                    is RadioButtonComponent -> it.copy(position = newPosition)
-                                    is DropdownComponent -> it.copy(position = newPosition)
-                                    is SwitchComponent -> it.copy(position = newPosition)
-                                }
-                            } else it
+                        components = components.map { current ->
+                            if (current.id == component.id) current.updatePosition(newPosition)
+                            else current
                         }
                     },
-                    onComponentDeleted = { componentToDelete ->
-                        components = components.filter { it.id != componentToDelete.id }
-                        if (selectedComponent?.id == componentToDelete.id) {
+                    onComponentDeleted = { component ->
+                        components = components.filter { it.id != component.id }
+                        if (selectedComponent?.id == component.id) {
                             selectedComponent = null
                         }
                     }
@@ -120,87 +110,85 @@ fun ScreenEditor(
             // Sağ panel - Özellikler
             PropertiesPanel(
                 selectedComponent = selectedComponent,
-                onComponentUpdated = { updated ->
-                    components = components.map { if (it.id == updated.id) updated else it }
-                    selectedComponent = updated
+                onComponentUpdated = { updatedComponent ->
+                    components = components.map { current ->
+                        if (current.id == updatedComponent.id) updatedComponent
+                        else current
+                    }
+                    selectedComponent = updatedComponent
                 },
-                onClearRequest = { showClearConfirmation = true },
+                onClearRequest = {
+                    showClearConfirmation = true
+                },
                 onSaveRequest = {
                     scope.launch {
                         try {
                             screenService.saveScreen("current_screen", components)
                             onSaveRequest()
                         } catch (e: Exception) {
-                            // Hata mesajı gösterilebilir
+                            // Hata durumunda işlem
                         }
                     }
                 }
             )
         }
+    }
 
-        // Onay BottomSheet'i
-        if (showClearConfirmation) {
-            ModalBottomSheet(
-                onDismissRequest = { showClearConfirmation = false },
-                sheetState = bottomSheetState
+    // Temizleme onayı için BottomSheet
+    if (showClearConfirmation) {
+        ModalBottomSheet(
+            onDismissRequest = { showClearConfirmation = false },
+            sheetState = bottomSheetState
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
+                Icon(
+                    Icons.Default.Warning,
+                    contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .size(48.dp)
+                        .padding(bottom = 16.dp),
+                    tint = MaterialTheme.colorScheme.error
+                )
+                
+                Text(
+                    "Tüm bileşenleri silmek istediğinizden emin misiniz?",
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(
-                        Icons.Default.Warning,
-                        contentDescription = "Uyarı",
-                        tint = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.size(48.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        "Tüm bileşenleri silmek istediğinizden emin misiniz?",
-                        style = MaterialTheme.typography.titleMedium,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        "Bu işlem geri alınamaz.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error
-                    )
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                    OutlinedButton(
+                        onClick = { showClearConfirmation = false },
+                        modifier = Modifier.weight(1f)
                     ) {
-                        OutlinedButton(
-                            onClick = { showClearConfirmation = false }
-                        ) {
-                            Text("İptal")
-                        }
-
-                        Button(
-                            onClick = {
-                                components = emptyList()
-                                selectedComponent = null
-                                showClearConfirmation = false
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text("Evet, Temizle")
-                        }
+                        Text("İptal")
+                    }
+                    
+                    Button(
+                        onClick = {
+                            components = emptyList()
+                            selectedComponent = null
+                            showClearConfirmation = false
+                        },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.error
+                        )
+                    ) {
+                        Text("Temizle")
                     }
                 }
             }
         }
     }
 }
-
