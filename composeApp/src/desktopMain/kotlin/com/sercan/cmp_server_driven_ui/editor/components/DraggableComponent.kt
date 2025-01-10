@@ -94,20 +94,18 @@ fun DraggableComponent(
             }
         }
 
-        // Silme ikonu - sadece seçili bileşen için göster
-        if (isSelected) {
-            IconButton(
-                onClick = { showDeleteConfirmation = true },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(24.dp)
-            ) {
-                Icon(
-                    Icons.Default.Delete,
-                    contentDescription = "Sil",
-                    tint = MaterialTheme.colorScheme.error
-                )
-            }
+        // Silme ikonu
+        IconButton(
+            onClick = { showDeleteConfirmation = true },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .size(24.dp)
+        ) {
+            Icon(
+                Icons.Default.Delete,
+                contentDescription = "Sil",
+                tint = MaterialTheme.colorScheme.error
+            )
         }
     }
 

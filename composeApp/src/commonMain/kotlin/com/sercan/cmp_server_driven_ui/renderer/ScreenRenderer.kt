@@ -1,19 +1,31 @@
 package com.sercan.cmp_server_driven_ui.renderer
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,138 +34,175 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sercan.cmp_server_driven_ui.model.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.MaterialTheme
-import com.sercan.cmp_server_driven_ui.util.getAlignment
+import com.sercan.cmp_server_driven_ui.model.ButtonComponent
+import com.sercan.cmp_server_driven_ui.model.CheckboxComponent
+import com.sercan.cmp_server_driven_ui.model.DropdownComponent
+import com.sercan.cmp_server_driven_ui.model.RadioButtonComponent
+import com.sercan.cmp_server_driven_ui.model.SwitchComponent
+import com.sercan.cmp_server_driven_ui.model.TextComponent
+import com.sercan.cmp_server_driven_ui.model.TextFieldComponent
+import com.sercan.cmp_server_driven_ui.model.UiComponent
 import com.sercan.cmp_server_driven_ui.util.toModifier
 import com.sercan.cmp_server_driven_ui.util.toTextStyle
 
 @Composable
 fun ScreenRenderer(
     components: List<UiComponent>,
-    onComponentStateChanged: (UiComponent) -> Unit
+    onComponentStateChanged: (UiComponent) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         components.forEach { component ->
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = component.position.getAlignment()
-            ) {
-                val modifier = component.position.toModifier()
-                
-                when (component) {
-                    is TextComponent -> {
+            when (component) {
+                is TextComponent -> {
+                    Text(
+                        text = component.text,
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+                is ButtonComponent -> {
+                    Button(
+                        onClick = { /* onClick işlemi */ },
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        )
+                    ) {
+                        Text(component.text)
+                    }
+                }
+                is TextFieldComponent -> {
+                    TextField(
+                        value = component.value,
+                        onValueChange = { onComponentStateChanged(component.copy(value = it)) },
+                        label = { Text(component.label ?: "") },
+                        placeholder = { Text(component.hint) },
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ).fillMaxWidth(),
+                        shape = MaterialTheme.shapes.medium,
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            cursorColor = MaterialTheme.colorScheme.primary
+                        ),
+                        textStyle = MaterialTheme.typography.bodyLarge
+                    )
+                }
+                is CheckboxComponent -> {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ).fillMaxWidth()
+                    ) {
+                        Checkbox(
+                            checked = component.isChecked,
+                            onCheckedChange = { onComponentStateChanged(component.copy(isChecked = it)) }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = component.text,
-                            modifier = modifier.then(
-                                component.style?.toModifier() ?: Modifier
-                            )
+                            component.label,
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
-                    is ButtonComponent -> {
-                        Button(
-                            onClick = { /* onClick işlemi */ },
-                            modifier = modifier.then(
-                                component.style?.toModifier() ?: Modifier
-                            )
-                        ) {
-                            Text(component.text)
-                        }
-                    }
-                    is TextFieldComponent -> {
-                        TextField(
-                            value = component.value,
-                            onValueChange = { onComponentStateChanged(component.copy(value = it)) },
-                            label = { Text(component.label ?: "") },
-                            placeholder = { Text(component.hint) },
-                            modifier = modifier.then(
-                                component.style?.toModifier() ?: Modifier
-                            )
+                }
+                is RadioButtonComponent -> {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ).fillMaxWidth()
+                    ) {
+                        RadioButton(
+                            selected = component.isSelected,
+                            onClick = { onComponentStateChanged(component.copy(isSelected = !component.isSelected)) }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            component.label,
+                            style = MaterialTheme.typography.bodyLarge
                         )
                     }
-                    is CheckboxComponent -> {
-                        Row(
-                            modifier = modifier.then(component.style?.toModifier() ?: Modifier),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Checkbox(
-                                checked = component.isChecked,
-                                onCheckedChange = { 
-                                    onComponentStateChanged(component.copy(isChecked = it))
-                                }
+                }
+                is DropdownComponent -> {
+                    var expanded by remember { mutableStateOf(false) }
+                    var selectedItem by remember { mutableStateOf(component.selectedOption) }
+
+                    Box(
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ).fillMaxWidth()
+                    ) {
+                        OutlinedButton(
+                            onClick = { expanded = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = MaterialTheme.colorScheme.onSurface
                             )
-                            Text(component.label)
-                        }
-                    }
-                    is RadioButtonComponent -> {
-                        Row(
-                            modifier = modifier.then(component.style?.toModifier() ?: Modifier),
-                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            RadioButton(
-                                selected = component.isSelected,
-                                onClick = { 
-                                    onComponentStateChanged(component.copy(isSelected = !component.isSelected))
-                                }
-                            )
-                            Text(component.label)
-                        }
-                    }
-                    is DropdownComponent -> {
-                        var expanded by remember { mutableStateOf(false) }
-                        Column(
-                            modifier = modifier.then(component.style?.toModifier() ?: Modifier)
-                        ) {
-                            OutlinedButton(
-                                onClick = { expanded = true },
-                                modifier = Modifier.fillMaxWidth()
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(component.selectedOption ?: component.label)
+                                Text(
+                                    selectedItem ?: component.label,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
                                 Icon(Icons.Default.ArrowDropDown, null)
                             }
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
-                                component.options.forEach { option ->
-                                    DropdownMenuItem(
-                                        text = { Text(option) },
-                                        onClick = {
-                                            expanded = false
-                                            onComponentStateChanged(component.copy(selectedOption = option))
-                                        }
-                                    )
-                                }
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            component.options.forEach { option ->
+                                DropdownMenuItem(
+                                    text = { 
+                                        Text(
+                                            option,
+                                            style = MaterialTheme.typography.bodyLarge
+                                        ) 
+                                    },
+                                    onClick = {
+                                        selectedItem = option
+                                        expanded = false
+                                        onComponentStateChanged(component.copy(selectedOption = option))
+                                    }
+                                )
                             }
                         }
                     }
-                    is SwitchComponent -> {
-                        Row(
-                            modifier = modifier.then(component.style?.toModifier() ?: Modifier),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(component.label)
-                            Switch(
-                                checked = component.isChecked,
-                                onCheckedChange = { 
-                                    onComponentStateChanged(component.copy(isChecked = it))
-                                }
-                            )
-                        }
+                }
+                is SwitchComponent -> {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = component.position.toModifier().then(
+                            component.style?.toModifier() ?: Modifier
+                        ).fillMaxWidth()
+                    ) {
+                        Text(
+                            component.label,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Switch(
+                            checked = component.isChecked,
+                            onCheckedChange = { onComponentStateChanged(component.copy(isChecked = it)) }
+                        )
                     }
                 }
             }
