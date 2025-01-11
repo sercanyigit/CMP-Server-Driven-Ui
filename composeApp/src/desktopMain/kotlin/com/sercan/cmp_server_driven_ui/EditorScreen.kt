@@ -42,6 +42,7 @@ import com.sercan.cmp_server_driven_ui.editor.propertiespanel.PropertiesPanelCom
 import com.sercan.cmp_server_driven_ui.editor.screendesign.DesignCanvas
 import com.sercan.cmp_server_driven_ui.editor.searchcomponents.SearchComponentsPanel
 import com.sercan.cmp_server_driven_ui.service.LocalScreenService
+import com.sercan.cmp_server_driven_ui.util.ColorUtil
 import com.sercan.cmp_server_driven_ui.util.Constant
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,7 @@ actual fun EditorScreen() {
 
             Box(modifier = Modifier.fillMaxSize()) {
                 Row(modifier = Modifier.fillMaxSize()) {
-                    // Sol panel - Bileşen listesi
+                    // Sol panel - Component listesi
                     SearchComponentsPanel(
                         onComponentSelected = { type ->
                             val newComponent = createComponent(type, componentCounter++)
@@ -131,7 +132,7 @@ actual fun EditorScreen() {
                                         snackbarHostState.showSnackbar("Ekran başarıyla kaydedildi")
                                     }
                                 } catch (e: Exception) {
-                                    // Hata durumunda işlem
+                                    println(e.message)
                                 }
                             }
                         }
@@ -153,11 +154,9 @@ actual fun EditorScreen() {
                     ) {
                         Icon(
                             Icons.Default.Warning,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(48.dp)
-                                .padding(bottom = 16.dp),
-                            tint = MaterialTheme.colorScheme.error
+                            contentDescription = "Uyarı",
+                            tint = ColorUtil.Primary,
+                            modifier = Modifier.size(48.dp)
                         )
 
                         Text(
@@ -187,7 +186,7 @@ actual fun EditorScreen() {
                                 },
                                 modifier = Modifier.weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.error
+                                    containerColor = ColorUtil.Primary
                                 )
                             ) {
                                 Text("Temizle")
@@ -198,4 +197,4 @@ actual fun EditorScreen() {
             }
         }
     }
-} 
+}

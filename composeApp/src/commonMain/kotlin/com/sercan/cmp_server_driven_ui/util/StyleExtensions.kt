@@ -6,14 +6,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.sercan.cmp_server_driven_ui.components.mobil.enums.HorizontalAlignment
 import com.sercan.cmp_server_driven_ui.components.mobil.enums.WidthSize
 import com.sercan.cmp_server_driven_ui.components.mobil.models.ComponentStyle
@@ -51,7 +48,7 @@ fun ComponentStyle.toModifier(): Modifier {
     
     backgroundColor?.let {
         try {
-            val color = Color(it.removePrefix("#").toLong(16) or 0x00000000FF000000)
+            val color = Color(it.removePrefix("#").toLong(16))
             modifier = modifier.background(color) as Modifier.Companion
         } catch (e: Exception) {
             println("Renk dönüştürme hatası: $it")
@@ -67,19 +64,4 @@ fun ComponentStyle.toModifier(): Modifier {
     }
     
     return modifier
-}
-
-@Composable
-fun ComponentStyle.toTextStyle(): TextStyle {
-    return MaterialTheme.typography.bodyMedium.copy(
-        color = textColor?.let {
-            try {
-                Color(it.removePrefix("#").toLong(16) or 0x00000000FF000000)
-            } catch (e: Exception) {
-                println("Renk dönüştürme hatası: $it")
-                Color.Unspecified
-            }
-        } ?: Color.Unspecified,
-        fontSize = fontSize?.sp ?: MaterialTheme.typography.bodyMedium.fontSize
-    )
 }

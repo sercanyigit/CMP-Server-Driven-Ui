@@ -88,7 +88,7 @@ fun DraggableComponent(
             Icon(
                 Icons.Default.Delete,
                 contentDescription = "Sil",
-                tint = ColorUtil.Secondary
+                tint = ColorUtil.Error
             )
         }
     }
@@ -115,7 +115,7 @@ fun DraggableComponent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    "Bu bileşeni silmek istediğinizden emin misiniz?",
+                    "Bu componenti silmek istediğinizden emin misiniz?",
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = ColorUtil.TextPrimary
                     ),

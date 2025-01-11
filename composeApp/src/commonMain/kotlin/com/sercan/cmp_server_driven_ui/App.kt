@@ -92,7 +92,7 @@ fun MobileApp() {
             components.isEmpty() -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Component bulunamadı")
-                    Text("Lütfen sample_screen.json dosyasını kontrol edin", 
+                    Text("Lütfen ${Constant.jsonFileName} dosyasını kontrol edin",
                         style = MaterialTheme.typography.bodySmall)
                 }
             }

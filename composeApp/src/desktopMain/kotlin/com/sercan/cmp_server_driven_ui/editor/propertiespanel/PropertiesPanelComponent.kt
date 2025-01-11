@@ -44,6 +44,7 @@ import com.sercan.cmp_server_driven_ui.editor.propertiespanel.componentpropertie
 import com.sercan.cmp_server_driven_ui.editor.propertiespanel.componentproperties.SwitchComponentProperties
 import com.sercan.cmp_server_driven_ui.editor.propertiespanel.componentproperties.TextComponentProperties
 import com.sercan.cmp_server_driven_ui.editor.propertiespanel.componentproperties.TextFieldComponentProperties
+import com.sercan.cmp_server_driven_ui.util.ColorUtil
 
 @Composable
 fun PropertiesPanelComponent(
@@ -161,7 +162,7 @@ fun PropertiesPanelComponent(
                 onClick = onClearRequest,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
+                    contentColor = ColorUtil.Primary
                 )
             ) {
                 Icon(Icons.Filled.Delete, contentDescription = "Tümünü Sil")
